@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="login">Login</string>
+    <string name="password">Hasło</string>
+    <string name="log_in">Zaloguj</string>
+    <string name="no_account">Nie masz jeszcze konta? Zarejestruj się</string>
+</resources>
