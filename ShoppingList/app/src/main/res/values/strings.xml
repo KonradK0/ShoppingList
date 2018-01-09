@@ -5,5 +5,5 @@
     <string name="log_in">Zaloguj</string>
     <string name="no_account">Nie masz jeszcze konta? Zarejestruj się</string>
     <string name="list_name">Nazwij swoją listę</string>
-    <string name="search">Szukaj...</string>
+    <string name="search">Szukaj artykułów...</string>
 </resources>
