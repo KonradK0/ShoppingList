@@ -21,8 +21,17 @@ public class User {
     private String password;
 
     public User(long uid, String login, String password) {
+        this.uid = uid;
         this.login = login;
         this.password = password;
+    }
+
+    public static User empty(){
+        return new User(0,"","");
+    }
+
+    public boolean isEmpty(){
+        return "".equals(this.login) && "".equals(this.password);
     }
 
     public long getUid() {

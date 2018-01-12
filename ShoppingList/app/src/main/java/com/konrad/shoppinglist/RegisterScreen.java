@@ -1,6 +1,5 @@
 package com.konrad.shoppinglist;
 
-import android.content.Context;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +18,7 @@ public class RegisterScreen extends AppCompatActivity {
 
     EditText loginEditText;
     EditText passwordEditText;
-    static AppDatabase db;
-    Context context;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,6 @@ public class RegisterScreen extends AppCompatActivity {
         loginEditText = findViewById(R.id.loginEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         db = AppDatabase.getInstance(getApplicationContext());
-        context = getApplicationContext();
     }
 
     private class InsertAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -48,10 +45,10 @@ public class RegisterScreen extends AppCompatActivity {
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
             if(success){
-                Toast.makeText(RegisterScreen.this, "Registration succesful!", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterScreen.this, R.string.registrationSuccessful, Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(RegisterScreen.this, "Username already exists", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterScreen.this, R.string.userExists, Toast.LENGTH_LONG).show();
             }
         }
     }
