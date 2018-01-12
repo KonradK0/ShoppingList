@@ -21,8 +21,7 @@ public interface UserDao {
     @Delete
     void deleteUser(User user);
 
-
-    @Query("SELECT * FROM user WHERE login = :login" )
+    @Query("SELECT * FROM user WHERE login = :login")
     User findByLogin(String login);
 
     @Query("SELECT * FROM user")

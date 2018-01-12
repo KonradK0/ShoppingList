@@ -25,27 +25,14 @@
         android:hint="@string/search"
         android:inputType="textPersonName" />
 
+
     <ScrollView
-        android:id="@+id/searchedScrollView"
+        android:id="@+id/searchScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/searchedListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </ScrollView>
-
-    <ScrollView
-        android:id="@+id/addedScrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/addedListView"
+            android:id="@+id/searchLinLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

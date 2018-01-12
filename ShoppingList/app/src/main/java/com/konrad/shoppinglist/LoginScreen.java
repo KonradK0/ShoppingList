@@ -1,16 +1,19 @@
 package com.konrad.shoppinglist;
 
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.konrad.shoppinglist.database.AppDatabase;
 import com.konrad.shoppinglist.database.User;
+
+import java.io.File;
+import java.nio.file.Paths;
 
 public class LoginScreen extends AppCompatActivity {
     EditText loginEdit;
@@ -24,6 +27,7 @@ public class LoginScreen extends AppCompatActivity {
         loginEdit = findViewById(R.id.loginText);
         passwordEdit = findViewById(R.id.passwordText);
         db = AppDatabase.getInstance(getApplicationContext());
+        Log.i("currentPath", new File("").getAbsolutePath());
     }
 
     private class logInAsyncTask extends AsyncTask <String, Void, User>{
@@ -55,7 +59,6 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void onClickNoAccount(View view){
-        Intent intent = new Intent(this, RegisterScreen.class);
-        startActivity(intent);
+        startActivity(new Intent(this, RegisterScreen.class));
     }
 }
