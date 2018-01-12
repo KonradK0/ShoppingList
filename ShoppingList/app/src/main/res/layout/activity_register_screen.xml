@@ -7,7 +7,7 @@
     tools:context="com.konrad.shoppinglist.RegisterScreen">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/loginEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,16 +19,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/loginEditText" />
 
     <Button
         android:id="@+id/button"
@@ -38,28 +38,19 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onClickRegister"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
+        android:text="@string/register"
+        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-    <TextView
-        android:id="@+id/textView"
+    <Button
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:onClick="onClickTestButton"
+        android:text="wypiszWszystkich"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 </android.support.constraint.ConstraintLayout>

@@ -2,16 +2,17 @@ package com.konrad.shoppinglist.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by Konrad on 11.01.2018.
  */
 
-@Entity
+@Entity(indices = @Index(value = "login", unique = true))
 public class User {
-    @PrimaryKey
-    private int uid;
+    @PrimaryKey(autoGenerate = true)
+    private long uid;
 
     @ColumnInfo(name = "login")
     private String login;
@@ -19,13 +20,12 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
-    public User(int uid, String login, String password) {
-        this.uid = uid;
+    public User(long uid, String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public int getUid() {
+    public long getUid() {
         return uid;
     }
 

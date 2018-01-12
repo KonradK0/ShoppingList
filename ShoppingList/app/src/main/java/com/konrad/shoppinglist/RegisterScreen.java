@@ -1,34 +1,85 @@
 package com.konrad.shoppinglist;
 
+import android.content.Context;
+import android.database.SQLException;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.konrad.shoppinglist.database.AppDatabase;
 import com.konrad.shoppinglist.database.User;
 
-import static com.konrad.shoppinglist.database.AppDatabase.database;
+import java.util.concurrent.ExecutionException;
+
 public class RegisterScreen extends AppCompatActivity {
+
+    EditText loginEditText;
+    EditText passwordEditText;
+    static AppDatabase db;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
+        loginEditText = findViewById(R.id.loginEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        db = AppDatabase.getInstance(getApplicationContext());
+        context = getApplicationContext();
     }
 
-    public void onClickRegister(View view){
-        EditText loginEdit = findViewById(R.id.editText);
-        String login = loginEdit.getText().toString();
-        EditText passwordEdit = findViewById(R.id.editText2);
-        String password = passwordEdit.getText().toString();
+    private class InsertAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-        database.userDao().insertUser(new User(1,"abc", "def"));
-        database.userDao().insertUser(new User(2,"ghi", "jkl"));
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                db.userDao().insertUser(new User(0, strings[0], strings[1]));
+                return true;
+            } catch (SQLException e){
+                return false;
+            }
+        }
 
-        TextView loginTextView = findViewById(R.id.textView);
-        loginTextView.setText(database.userDao().findByLogin("abc").getLogin());
+        @Override
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
+            if(success){
+                Toast.makeText(RegisterScreen.this, "Registration succesful!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(RegisterScreen.this, "Username already exists", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
+    public void onClickRegister(View view) throws ExecutionException, InterruptedException {
+        InsertAsyncTask task = new InsertAsyncTask();
+        task.execute(loginEditText.getText().toString(), passwordEditText.getText().toString());
+    }
+
+    //Tylko do debugu, wypisuje (w logu) loginy wszystkich userów
+    public void onClickTestButton(View view) {
+        AsyncTask findTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                //User found = instance.userDao().findByLogin("abc");
+                User[] users = db.userDao().getAllUsers();
+                for (User u : users) {
+                    Log.i("Login : haslo", u.getLogin() + " : " + u.getPassword());
+                }
+                return users;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+
+                //loginTextView.setText(found.getLogin());
+            }
+        };
+        findTask.execute();
     }
 }
