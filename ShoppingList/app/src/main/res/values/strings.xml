@@ -11,4 +11,5 @@
     <string name="userExists">Taki użytkownik już istnieje</string>
     <string name="wrongUsername">Podałeś złą nazwę użytkownika</string>
     <string name="wrongPassword">Podałeś złe hasło</string>
+    <string name="addNewList">Dodaj nową listę…</string>
 </resources>

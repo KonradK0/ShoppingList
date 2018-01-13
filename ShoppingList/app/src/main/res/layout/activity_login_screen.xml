@@ -7,7 +7,7 @@
     tools:context="com.konrad.shoppinglist.LoginScreen">
 
     <EditText
-        android:id="@+id/loginText"
+        android:id="@+id/login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.197" />
 
     <EditText
-        android:id="@+id/passwordText"
+        android:id="@+id/password_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,10 +37,10 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginText" />
+        app:layout_constraintTop_toBottomOf="@+id/login_text" />
 
     <Button
-        android:id="@+id/logInButton"
+        android:id="@+id/log_in_button"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,13 +50,13 @@
         android:onClick="onClickLogIn"
         android:text="@string/log_in"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/passwordText"
+        app:layout_constraintEnd_toEndOf="@+id/password_text"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/passwordText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordText" />
+        app:layout_constraintStart_toStartOf="@+id/password_text"
+        app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
     <TextView
-        android:id="@+id/noAccount"
+        android:id="@+id/no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -72,6 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logInButton"
+        app:layout_constraintTop_toBottomOf="@+id/log_in_button"
         app:layout_constraintVertical_bias="0.253" />
 </android.support.constraint.ConstraintLayout>

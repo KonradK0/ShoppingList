@@ -13,7 +13,6 @@ import com.konrad.shoppinglist.database.AppDatabase;
 import com.konrad.shoppinglist.database.User;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class LoginScreen extends AppCompatActivity {
     EditText loginEdit;
@@ -24,10 +23,9 @@ public class LoginScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        loginEdit = findViewById(R.id.loginText);
-        passwordEdit = findViewById(R.id.passwordText);
+        loginEdit = findViewById(R.id.login_text);
+        passwordEdit = findViewById(R.id.password_text);
         db = AppDatabase.getInstance(getApplicationContext());
-        Log.i("currentPath", new File("").getAbsolutePath());
     }
 
     private class logInAsyncTask extends AsyncTask <String, Void, User>{
@@ -49,7 +47,8 @@ public class LoginScreen extends AppCompatActivity {
                 Toast.makeText(LoginScreen.this, R.string.wrongPassword, Toast.LENGTH_LONG).show();
                 return;
             }
-            Intent intent = new Intent(LoginScreen.this, LoggedInScreen.class);
+            Intent intent = new Intent(LoginScreen.this, DisplayAllListsScreen.class);
+            intent.putExtra("USERUID", user.getUid());
             startActivity(intent);
         }
     }

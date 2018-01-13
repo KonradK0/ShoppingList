@@ -24,8 +24,8 @@ public class RegisterScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
-        loginEditText = findViewById(R.id.loginEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
+        loginEditText = findViewById(R.id.login_edit_text);
+        passwordEditText = findViewById(R.id.password_edit_text);
         db = AppDatabase.getInstance(getApplicationContext());
     }
 

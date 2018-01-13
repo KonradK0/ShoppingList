@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.konrad.shoppinglist.LoggedInScreen">
+    tools:context="com.konrad.shoppinglist.SearchProductsScreen">
 
 
     <EditText
-        android:id="@+id/listNameText"
+        android:id="@+id/list_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -17,7 +17,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/searchText"
+        android:id="@+id/search_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
@@ -27,12 +27,12 @@
 
 
     <ScrollView
-        android:id="@+id/searchScrollView"
+        android:id="@+id/search_scroll_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/searchLinLayout"
+            android:id="@+id/search_lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >

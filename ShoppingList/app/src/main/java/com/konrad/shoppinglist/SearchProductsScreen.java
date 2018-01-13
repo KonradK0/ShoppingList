@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoggedInScreen extends AppCompatActivity {
+public class SearchProductsScreen extends AppCompatActivity {
 
     EditText searchText;
     LinearLayout found;
@@ -29,8 +29,8 @@ public class LoggedInScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in_screen);
-        searchText = findViewById(R.id.searchText);
-        found = findViewById(R.id.searchLinLayout);
+        searchText = findViewById(R.id.search_text);
+        found = findViewById(R.id.search_lin_layout);
         db = AppDatabase.getInstance(getApplicationContext());
         setSearchOnTextChanged();
     }
@@ -41,7 +41,7 @@ public class LoggedInScreen extends AppCompatActivity {
     }
 
     private LinearLayout inflateProductBox(String productName, int childIndex){
-        LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_row, found, true);
+        LayoutInflater.from(getApplicationContext()).inflate(R.layout.search_product_box, found, true);
         LinearLayout productBox = (LinearLayout) found.getChildAt(childIndex);
         CheckBox box = (CheckBox) productBox.getChildAt(0);
         box.setChecked(false);
