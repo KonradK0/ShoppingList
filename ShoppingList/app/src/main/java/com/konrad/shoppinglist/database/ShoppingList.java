@@ -23,4 +23,16 @@ public class ShoppingList {
         this.userUid = userUid;
         this.name = name;
     }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public long getUserUid() {
+        return userUid;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

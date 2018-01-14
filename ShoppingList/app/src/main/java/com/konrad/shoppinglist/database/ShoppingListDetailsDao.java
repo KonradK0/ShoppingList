@@ -19,6 +19,4 @@ public interface ShoppingListDetailsDao {
     @Delete
     public void deleteProductFromList(ShoppingListDetails details);
 
-    @Query("SELECT * FROM product P JOIN shoppinglistdetails SD ON P.productUid = SD.productUid WHERE SD.listUid = :listUid")
-    public Product[] getProductsOnList(long listUid);
 }

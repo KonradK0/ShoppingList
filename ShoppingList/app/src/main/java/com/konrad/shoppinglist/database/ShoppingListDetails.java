@@ -8,7 +8,7 @@ import android.arch.persistence.room.ForeignKey;
  * Created by Konrad on 13.01.2018.
  */
 
-@Entity(primaryKeys = {"listUid, productUid"},
+@Entity(primaryKeys = {"listUid", "productUid"},
         foreignKeys = {@ForeignKey(entity = ShoppingList.class, parentColumns = "uid", childColumns = "listUid"),
                         @ForeignKey(entity = Product.class, parentColumns = "uid", childColumns = "productUid")})
 public class ShoppingListDetails {
