@@ -8,24 +8,23 @@ import android.arch.persistence.room.ForeignKey;
  */
 
 
-@Entity(primaryKeys = {"productUid", "shoppingListDetailsUid"},
-        foreignKeys = {@ForeignKey(entity = Product.class, parentColumns = "uid", childColumns = "productId"),
-                        @ForeignKey(entity = ShoppingListDetails.class, parentColumns = "listUid", childColumns = "detailsId")})
+@Entity(primaryKeys = {"productId", "listId"},
+        foreignKeys = @ForeignKey(entity = Product.class, parentColumns = "uid", childColumns = "productId"))
 public class ProductJoinDetails {
 
-    private long productIid;
-    private long detailsId;
+    private long productId;
+    private long listId;
 
-    public ProductJoinDetails(long productIid, long detailsId) {
-        this.productIid = productIid;
-        this.detailsId = detailsId;
+    public ProductJoinDetails(long productId, long listId) {
+        this.productId = productId;
+        this.listId = listId;
     }
 
-    public long getProductIid() {
-        return productIid;
+    public long getProductId() {
+        return productId;
     }
 
-    public long getDetailsId() {
-        return detailsId;
+    public long getListId() {
+        return listId;
     }
 }

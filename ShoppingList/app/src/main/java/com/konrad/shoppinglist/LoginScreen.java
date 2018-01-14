@@ -48,7 +48,7 @@ public class LoginScreen extends AppCompatActivity {
                 return;
             }
             Intent intent = new Intent(LoginScreen.this, DisplayAllListsScreen.class);
-            intent.putExtra("USERUID", user.getUid());
+            intent.putExtra("USERID", user.getUid());
             startActivity(intent);
         }
     }

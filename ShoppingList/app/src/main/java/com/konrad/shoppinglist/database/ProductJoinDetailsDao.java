@@ -8,6 +8,6 @@ import android.arch.persistence.room.Query;
  */
 @Dao
 public interface ProductJoinDetailsDao {
-    @Query("SELECT * FROM product JOIN productjoindetails ON product.productUid = productjoindetails.productUid WHERE productjoindetails.detailsId = :listUid")
-    public Product[] getProductsOnList(long listUid);
+    @Query("SELECT * FROM product JOIN productjoindetails ON product.productUid = productjoindetails.productUid WHERE productjoindetails.listId = :listId")
+    public Product[] getProductsOnList(long listId);
 }
