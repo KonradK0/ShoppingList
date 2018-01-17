@@ -41,16 +41,16 @@ public class DisplayAllListsScreen extends AppCompatActivity {
         getAllShoppingLists();
     }
 
-    private static class addNewListAsyncTask extends AsyncTask<String, Void, Boolean>{
+    private static class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(String [] strings) {
+        protected Boolean doInBackground(String[] strings) {
             db.shoppingListDao().insertShoppingList(new ShoppingList(0, userId, strings[0]));
             return true;
         }
     }
 
-    private void showAddListPopup(View parent){
+    private void showAddListPopup(View parent) {
         final CardView popUpCardView = (CardView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.add_list_popup_view, null, false);
         final LinearLayout popUpLinLayout = (LinearLayout) popUpCardView.getChildAt(0);
         Button button = (Button) popUpLinLayout.getChildAt(1);
@@ -80,7 +80,7 @@ public class DisplayAllListsScreen extends AppCompatActivity {
         popup.showAtLocation(parent, Gravity.CENTER_HORIZONTAL, 10, 10);
     }
 
-    private void setNewListCardViewListener(){
+    private void setNewListCardViewListener() {
         newListCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +89,7 @@ public class DisplayAllListsScreen extends AppCompatActivity {
         });
     }
 
-    private void setOnExistingListCardViewListener(CardView singleListCardView, final String listName){
+    private void setOnExistingListCardViewListener(CardView singleListCardView, final String listName) {
         singleListCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,18 +112,18 @@ public class DisplayAllListsScreen extends AppCompatActivity {
         protected void onPostExecute(List<ShoppingList> shoppingLists) {
             super.onPostExecute(shoppingLists);
             int i = 0;
-            for(ShoppingList shoppingList : shoppingLists){
+            for (ShoppingList shoppingList : shoppingLists) {
                 setShoppingListBox(shoppingList.getName(), i++);
             }
         }
     }
 
-    public void setShoppingListBox(String listName, int childIndex){
+    public void setShoppingListBox(String listName, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
         setOnExistingListCardViewListener(singleListCardView, listName);
     }
 
-    private CardView inflateShoppingListBox(String listName, int childIndex){
+    private CardView inflateShoppingListBox(String listName, int childIndex) {
         LayoutInflater.from(getApplicationContext()).inflate(R.layout.shopping_list_box, allLists, true);
         CardView singleListCardView = (CardView) allLists.getChildAt(childIndex);
         TextView listNameTextView = (TextView) singleListCardView.getChildAt(0);
@@ -131,7 +131,7 @@ public class DisplayAllListsScreen extends AppCompatActivity {
         return singleListCardView;
     }
 
-    private void getAllShoppingLists(){
+    private void getAllShoppingLists() {
         new getAllListsAsyncTask().execute(userId);
     }
 }

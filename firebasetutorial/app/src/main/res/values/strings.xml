@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+    <string name="login">Login</string>
+    <string name="password">Hasło</string>
+    <string name="log_in">Zaloguj</string>
+    <string name="no_account">Nie masz jeszcze konta? Zarejestruj się</string>
+    <string name="list_name">Nazwij swoją listę</string>
+    <string name="search">Szukaj artykułów…</string>
+    <string name="register">Zarejestruj</string>
+    <string name="registrationSuccessful">Rejestracja pomyślna!</string>
+    <string name="userExists">Taki użytkownik już istnieje</string>
+    <string name="wrongUsername">Podałeś złą nazwę użytkownika</string>
+    <string name="wrongPassword">Podałeś złe hasło</string>
+    <string name="addNewList">Dodaj nową listę…</string>
+    <string name="addListName">Podaj nazwę listy…</string>
+    <string name="addList">Dodaj listę</string>
+</resources>
