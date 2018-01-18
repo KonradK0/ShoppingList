@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         if (loginField.getText().toString().equals(user.login)) {
                             if (passwordField.getText().toString().equals(user.password)) {
                                 userFound = true;
-                                StartView();
+                                StartView(user.uid);
                                 break;
                             }
                         }
@@ -94,109 +94,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void StartView() {
-        startActivity(new Intent(this, LoggedInScreen.class));
+    void StartView(String user) {
+        Intent intent = new Intent(this, LoggedInScreen.class);
+        intent.putExtra("USERID", user);
+        startActivity(intent);
     }
 
     public void onClickRegister(View view) {
         System.out.println("usercounter: " + userCounter);
         startActivity(new Intent(this, RegisterScreen.class));
     }
-
-    //    private ListView mUserList;
-//
-//    private ArrayList<String> mUsernames = new ArrayList<>();
-//    private ArrayList<String> mKeys = new ArrayList<>();
-//
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.registration_view);
-//
-//        databaseReference = FirebaseDatabase.getInstance().getReference();
-//        mUserList = (ListView) findViewById(R.id.user_list);
-//
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mUsernames);
-//        mUserList.setAdapter(arrayAdapter);
-//
-//        databaseReference.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                String value = dataSnapshot.getValue(String.class);
-//
-//                mUsernames.add(value);
-//
-//                String key = dataSnapshot.getKey();
-//                mKeys.add(key);
-//
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                String value = dataSnapshot.getValue(String.class);
-//                String key = dataSnapshot.getKey();
-//                int index = mKeys.indexOf(key);
-//
-//                mUsernames.set(index, value);
-//                arrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-
-    //    private Button mFirebaseBtn;
-//    private EditText mNameField;
-//    private EditText loginField;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.registration_view);
-//
-//        mFirebaseBtn = (Button) findViewById(R.id.firebase_btn);
-//        databaseReference = FirebaseDatabase.getInstance().getReference();
-//        mNameField = (EditText) findViewById(R.id.name_field);
-//        loginField = (EditText) findViewById(R.id.email_field);
-//
-//        mFirebaseBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 1 - Create a child in root object
-//                // 2 - Assign some value to that child object
-//                String name = mNameField.getText().toString().trim();
-//                String email = loginField.getText().toString().trim();
-//
-//                HashMap<String, String> dataMap = new HashMap<>();
-//                dataMap.put("Name", name);
-//                dataMap.put("Email", email);
-//
-//                databaseReference.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if(task.isSuccessful()) {
-//                            Toast.makeText(MainActivity.this, "Stored...", Toast.LENGTH_LONG).show();
-//                        } else {
-//                            Toast.makeText(MainActivity.this, "Error...", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//    }
 }

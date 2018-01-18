@@ -11,7 +11,7 @@ public class User {
     String uid;
     String login;
     String password;
-    ArrayList<String> arrayList = new ArrayList<>();
+
     public User() {
     }
 
