@@ -16,17 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.kuba.firebasetutorial.database.Database;
+import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class LoggedInScreen extends AppCompatActivity {
     CardView newListCardView;
     LinearLayout allLists;
-    DatabaseReference databaseReference;
+    Database db;
+    DatabaseReference dbListsRef;
     private static long userId;
 
     @Override
@@ -35,16 +35,18 @@ public class LoggedInScreen extends AppCompatActivity {
         setContentView(R.layout.logged_in_view);
         allLists = findViewById(R.id.all_lists_layout);
         newListCardView = findViewById(R.id.new_list_card_view);
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("lists");
         userId = getIntent().getLongExtra("USERID", -1);
+        db = FireDatabase.getInstance();
+        dbListsRef = db.getFirebaseDatabase().getReference().child("lists");
+
         setNewListCardViewListener();
-//        getAllShoppingLists();
+        getAllShoppingLists();
     }
 
     private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String[] strings) {
-            DatabaseReference newRef = databaseReference.push();
+            DatabaseReference newRef = dbListsRef.push();
             newRef.setValue(new ShoppingList("0", getIntent().getStringExtra("USERID"), new ArrayList<Product>()));
             return true;
         }
@@ -101,24 +103,6 @@ public class LoggedInScreen extends AppCompatActivity {
         });
     }
 
-//    private class getAllListsAsyncTask extends AsyncTask<Long, Object, List<ShoppingList>> {
-//
-//        @Override
-//        protected List<ShoppingList> doInBackground(Long[] userId) {
-//           /// to trzeba ogarnac
-//           /// return Arrays.asList(databaseReference.shoppingListDao().getUsersLists(userId[0]));
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<ShoppingList> shoppingLists) {
-//            super.onPostExecute(shoppingLists);
-//            int i = 0;
-//            for (ShoppingList shoppingList : shoppingLists) {
-//                setShoppingListBox(shoppingList.getListid(), i++);
-//            }
-//        }
-//    }
 
     public void setShoppingListBox(String listName, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
@@ -133,7 +117,11 @@ public class LoggedInScreen extends AppCompatActivity {
         return singleListCardView;
     }
 
-//    private void getAllShoppingLists() {
-//        new getAllListsAsyncTask().execute(userId);
-//    }
+    private void getAllShoppingLists() {
+//        dbListsRef ;
+//        int i = 0;
+//        for (ShoppingList shoppingList : shoppingLists) {
+//            setShoppingListBox(shoppingList.getListid(), i++);
+//        }
+    }
 }
