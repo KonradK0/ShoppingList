@@ -63,7 +63,7 @@ public class MessagesScreen extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        })
+        });
 
         //TODO pobrać z bazy wiadomości i wykorzystać dwie powyższe funkcje
     }
