@@ -74,7 +74,7 @@ public class SearchProductsScreen extends AppCompatActivity {
             super.onPostExecute(products);
             int i = 0;
             for (Product product : products) {
-                setFoundProductBox(product.getProductid(), i++);
+                setFoundProductBox(String.valueOf(product.getProductid()), i++);
             }
         }
     }

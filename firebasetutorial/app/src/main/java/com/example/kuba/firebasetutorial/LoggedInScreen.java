@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,26 +19,33 @@ import android.widget.TextView;
 
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LoggedInScreen extends AppCompatActivity {
     CardView newListCardView;
     LinearLayout allLists;
     Database db;
-    DatabaseReference dbListsRef;
-    private static long userId;
-
+    DatabaseReference dbUsersRef;
+    DatabaseReference currentRef;
+    private static String userId;
+    int childrencount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logged_in_view);
         allLists = findViewById(R.id.all_lists_layout);
         newListCardView = findViewById(R.id.new_list_card_view);
-        userId = getIntent().getLongExtra("USERID", -1);
+        userId = getIntent().getStringExtra("USERID");
         db = FireDatabase.getInstance();
-        dbListsRef = db.getFirebaseDatabase().getReference().child("lists");
+        dbUsersRef = db.getFirebaseDatabase().getReference().child("users");
 
         setNewListCardViewListener();
         getAllShoppingLists();
@@ -46,8 +54,11 @@ public class LoggedInScreen extends AppCompatActivity {
     private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String[] strings) {
-            DatabaseReference newRef = dbListsRef.push();
-            newRef.setValue(new ShoppingList("0", getIntent().getStringExtra("USERID"), new ArrayList<Product>()));
+            DatabaseReference newListRef = currentRef.child(String.valueOf(childrencount+1));
+            List<Product> productList = new ArrayList<>();
+            productList.add(new Product("-1", "nic"));
+            newListRef.setValue(new ShoppingList(String.valueOf(childrencount + 1), strings[0], productList));
+            getAllShoppingLists();
             return true;
         }
     }
@@ -103,24 +114,6 @@ public class LoggedInScreen extends AppCompatActivity {
         });
     }
 
-
-        @Override
-        protected List<ShoppingList> doInBackground(Long[] userId) {
-           /// to trzeba ogarnac
-           /// return Arrays.asList(databaseReference.shoppingListDao().getUsersLists(userId[0]));
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<ShoppingList> shoppingLists) {
-            super.onPostExecute(shoppingLists);
-            int i = 0;
-            for (ShoppingList shoppingList : shoppingLists) {
-                setShoppingListBox(shoppingList.getListid(), i++);
-            }
-        }
-    }
-
     public void setShoppingListBox(String listName, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
         setOnExistingListCardViewListener(singleListCardView, listName);
@@ -135,10 +128,30 @@ public class LoggedInScreen extends AppCompatActivity {
     }
 
     private void getAllShoppingLists() {
-//        dbListsRef ;
-//        int i = 0;
-//        for (ShoppingList shoppingList : shoppingLists) {
-//            setShoppingListBox(shoppingList.getListid(), i++);
-//        }
+        dbUsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                childrencount = 0;
+                for(DataSnapshot dsp : dataSnapshot.getChildren()){
+                    User user = dsp.getValue(User.class);
+                    if (dsp.getKey().equals(userId)) {
+                        Log.i("znaleziono usera" , " uwaga: " + dsp.getValue(User.class).getLogin());
+                        DataSnapshot shoppingListRef = dsp.child("shoppingLists");
+                        for(DataSnapshot dspShop : shoppingListRef.getChildren()) {
+                            Log.i("znaleziono liste: ", dspShop.getValue(ShoppingList.class).getName());
+                            setShoppingListBox(dspShop.getValue(ShoppingList.class).getName(), childrencount);
+                            childrencount++;
+                        }
+                        currentRef = dsp.getRef().child("shoppingLists");
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

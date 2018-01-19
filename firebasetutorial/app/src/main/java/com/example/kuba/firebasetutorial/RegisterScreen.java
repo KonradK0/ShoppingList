@@ -38,14 +38,20 @@ public class RegisterScreen extends AppCompatActivity {
         EditText password =  findViewById(R.id.passwordEditText);
         DatabaseReference newPostRef = db.getFirebaseDatabase().getReference().child("users").push();
 
+        ArrayList<Message> messageArrayList = new ArrayList<>();
+        Message message = new Message("dddd", "d", "to jest d");
+        messageArrayList.add(message);
         ArrayList<ShoppingList> arrayList = new ArrayList<>();
         ArrayList<Product> productArrayList = new ArrayList<>();
         Product product = new Product("-1", "xyz");
+        Product product1 = new Product("-2", "abc");
         productArrayList.add(product);
+        productArrayList.add(product1);
         ShoppingList shoppingList = new ShoppingList("-1", "lista_xyz", productArrayList);
+        ShoppingList shoppingList1 = new ShoppingList("-2", "lista_abc", productArrayList);
         arrayList.add(shoppingList);
 
-        User user = new User(login.getText().toString(), password.getText().toString(), arrayList);
+        User user = new User(login.getText().toString(), password.getText().toString(), arrayList, messageArrayList);
         newPostRef.setValue(user);
 
         startActivity(new Intent(this, MainActivity.class));
