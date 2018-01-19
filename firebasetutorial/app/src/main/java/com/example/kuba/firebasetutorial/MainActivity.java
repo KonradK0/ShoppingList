@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.kuba.firebasetutorial.database.CredentialsVEL;
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
+import com.example.kuba.firebasetutorial.database.State;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Database db;
     private EditText loginField;
     private EditText passwordField;
-    boolean userFound;
+    public boolean userFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +33,42 @@ public class MainActivity extends AppCompatActivity {
         db = FireDatabase.getInstance();
         loginField = findViewById(R.id.loginEditText);
         passwordField = findViewById(R.id.pwEditText);
-        //userFound = false;
+        userFound = false;
     }
 
     public void onClickLogin(View view) {
         userFound = false;
-        User found = db.checkCredentials(loginField.getText().toString(), passwordField.getText().toString(), userFound);
-        Log.i("userLogin", found.getLogin());
-        Log.i("userPw", found.getPassword());
-        if(found.isEmpty()){
-            Toast.makeText(getApplicationContext(), "USER NOT FOUND", Toast.LENGTH_LONG).show();
-        }
-        else {
-            startView(found.getUid());
-        }
+        db.getFirebaseDatabase().getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (!userFound) {
+                    System.out.println("THERE WE FUCKIN 2");
+                    Log.e("Count ", "" + snapshot.getChildrenCount());
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        User user = postSnapshot.getValue(User.class);
+                        Log.e("Get login", user.getLogin());
+                        if (loginField.getText().toString().equals(user.getLogin())) {
+                            if (passwordField.getText().toString().equals(user.getPassword())) {
+                                Log.e("PRZED CREDENTIALS", Boolean.valueOf(userFound).toString());
+                                userFound = true;
+                                Log.e("PO CREDENTIALS", Boolean.valueOf(userFound).toString());
+                                Log.e("Get password", user.getPassword());
+                                startView(user.getUid());
+                                break;
+                            }
+                        }
+                        Log.e("Get uid", user.getUid());
+                    }
+                    if(!userFound) {
+                        Toast.makeText(getApplicationContext(), "USER NOT FOUND", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     void startView(String userID) {
