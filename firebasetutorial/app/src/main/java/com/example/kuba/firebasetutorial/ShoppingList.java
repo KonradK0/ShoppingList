@@ -22,7 +22,7 @@ public class ShoppingList implements Serializable {
         this.productList = productList;
     }
 
-    public String getId() {
+    public String getListid() {
         return listid;
     }
 
