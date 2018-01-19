@@ -14,4 +14,5 @@
     <string name="addNewList">Dodaj nową listę…</string>
     <string name="addListName">Podaj nazwę listy…</string>
     <string name="addList">Dodaj listę</string>
+    <string name="writeNewMessage">Napisz nową wiadomość</string>
 </resources>

@@ -16,9 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterScreen"/>
-        <activity android:name=".LoggedInScreen"/>
-        <activity android:name=".SearchProductsScreen"/>
+        <activity android:name=".RegisterScreen" />
+        <activity android:name=".LoggedInScreen" />
+        <activity android:name=".SearchProductsScreen" />
+        <activity android:name=".MessagesScreen" />
+        <activity android:name=".SingleMessage"></activity>
     </application>
 
 </manifest>

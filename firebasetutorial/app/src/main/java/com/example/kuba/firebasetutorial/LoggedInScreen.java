@@ -38,7 +38,7 @@ public class LoggedInScreen extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("lists");
         userId = getIntent().getLongExtra("USERID", -1);
         setNewListCardViewListener();
-//        getAllShoppingLists();
+        getAllShoppingLists();
     }
 
     private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -101,24 +101,24 @@ public class LoggedInScreen extends AppCompatActivity {
         });
     }
 
-//    private class getAllListsAsyncTask extends AsyncTask<Long, Object, List<ShoppingList>> {
-//
-//        @Override
-//        protected List<ShoppingList> doInBackground(Long[] userId) {
-//           /// to trzeba ogarnac
-//           /// return Arrays.asList(databaseReference.shoppingListDao().getUsersLists(userId[0]));
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<ShoppingList> shoppingLists) {
-//            super.onPostExecute(shoppingLists);
-//            int i = 0;
-//            for (ShoppingList shoppingList : shoppingLists) {
-//                setShoppingListBox(shoppingList.getListid(), i++);
-//            }
-//        }
-//    }
+    private class getAllListsAsyncTask extends AsyncTask<Long, Object, List<ShoppingList>> {
+
+        @Override
+        protected List<ShoppingList> doInBackground(Long[] userId) {
+           /// to trzeba ogarnac
+           /// return Arrays.asList(databaseReference.shoppingListDao().getUsersLists(userId[0]));
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<ShoppingList> shoppingLists) {
+            super.onPostExecute(shoppingLists);
+            int i = 0;
+            for (ShoppingList shoppingList : shoppingLists) {
+                setShoppingListBox(shoppingList.getListid(), i++);
+            }
+        }
+    }
 
     public void setShoppingListBox(String listName, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
@@ -133,7 +133,7 @@ public class LoggedInScreen extends AppCompatActivity {
         return singleListCardView;
     }
 
-//    private void getAllShoppingLists() {
-//        new getAllListsAsyncTask().execute(userId);
-//    }
+    private void getAllShoppingLists() {
+        new getAllListsAsyncTask().execute(userId);
+    }
 }

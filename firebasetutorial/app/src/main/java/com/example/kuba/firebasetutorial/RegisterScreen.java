@@ -36,7 +36,7 @@ public class RegisterScreen extends AppCompatActivity {
         EditText password =  findViewById(R.id.passwordEditText);
 
         DatabaseReference newPostRef = db.getFirebaseDatabase().getReference().child("users").push();
-        User user = new User(String.valueOf(db.incrementUserCounter()), login.getText().toString(), password.getText().toString());
+        User user = new User(newPostRef.getKey(), login.getText().toString(), password.getText().toString());
         newPostRef.setValue(user);
 
         startActivity(new Intent(this, MainActivity.class));
