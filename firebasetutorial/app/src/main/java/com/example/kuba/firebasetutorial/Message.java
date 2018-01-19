@@ -7,14 +7,16 @@ package com.example.kuba.firebasetutorial;
 public class Message {
 
     String title;
-    String from;
+    String fromUid;
+    String toUid;
     String text;
 
     Message(){ }
 
-    public Message(String title, String from, String text) {
+    public Message(String title, String fromUid, String toUid, String text) {
         this.title = title;
-        this.from = from;
+        this.fromUid = fromUid;
+        this.toUid = toUid;
         this.text = text;
     }
 
@@ -22,8 +24,12 @@ public class Message {
         return title;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromUid() {
+        return fromUid;
+    }
+
+    public String getToUid() {
+        return toUid;
     }
 
     public String getText() {

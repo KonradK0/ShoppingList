@@ -17,7 +17,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/new_list_card_view"
+            android:id="@+id/new_message_card_view"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="@string/writeNewMessage"
+                android:text="@string/write_new_message"
                 android:textSize="32sp"
                 tools:layout_editor_absoluteX="2dp"
                 tools:layout_editor_absoluteY="0dp" />

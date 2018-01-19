@@ -18,12 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MessagesScreen extends AppCompatActivity {
     Database db;
     LinearLayout messagesLinLayout;
+    CardView newMessageCardView;
     String uid;
     final Map<String, ArrayList<String>> messagesFromUsers = new HashMap<>();
 
@@ -32,9 +32,22 @@ public class MessagesScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages_screen);
         messagesLinLayout = findViewById(R.id.users_messages);
+        newMessageCardView = findViewById(R.id.new_message_card_view);
         db = FireDatabase.getInstance();
         uid = getIntent().getStringExtra("USERID");
         getUsersMessages();
+        setNewMessageCardViewOnClickListener();
+    }
+
+    void setNewMessageCardViewOnClickListener() {
+        newMessageCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WriteNewMessageScreen.class);
+                intent.putExtra("USERID", uid);
+                startActivity(intent);
+            }
+        });
     }
 
     private CardView inflateMessageBox(String fromUser, int childIndex) {
@@ -45,7 +58,7 @@ public class MessagesScreen extends AppCompatActivity {
         return singleListCardView;
     }
 
-    void setOnMessageBoxOnClick(CardView cardView, final String from){
+    void setOnMessageBoxOnClick(CardView cardView, final String from) {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,28 +70,28 @@ public class MessagesScreen extends AppCompatActivity {
         });
     }
 
-    void setupMessageBox(String from, int index){
+    void setupMessageBox(String from, int index) {
         CardView messageCardView = inflateMessageBox(from, index);
         setOnMessageBoxOnClick(messageCardView, from);
     }
 
-    public void getUsersMessages(){
-        DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messagesLinLayout");
+    public void getUsersMessages() {
+        DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messages");
         messages.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Message message = postSnapshot.getValue(Message.class);
-                    String from = message.getFrom();
+                    String from = message.getFromUid();
                     String text = message.getText();
-                    if(messagesFromUsers.get(from) == null){
+                    if (messagesFromUsers.get(from) == null) {
                         messagesFromUsers.put(from, new ArrayList<String>());
                     }
                     messagesFromUsers.get(from).add(text);
                 }
 
                 int currentUser = 0;
-                for(String user : messagesFromUsers.keySet()){
+                for (String user : messagesFromUsers.keySet()) {
                     setupMessageBox(user, currentUser++);
                 }
             }

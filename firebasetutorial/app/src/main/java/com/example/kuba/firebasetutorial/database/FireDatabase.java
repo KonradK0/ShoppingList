@@ -11,11 +11,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public final class FireDatabase implements Database {
 
-    private static FireDatabase instance = new FireDatabase();
+    private static FireDatabase instance;
     private static FirebaseDatabase firebaseDatabase;
     private static int userCounter = getInstance().getUserCount();
 
     private FireDatabase() {
+        instance = new FireDatabase();
         if (firebaseDatabase == null) {
             firebaseDatabase = FirebaseDatabase.getInstance();
         }
