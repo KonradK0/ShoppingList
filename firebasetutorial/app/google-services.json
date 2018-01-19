@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "572945808323-qap2frrmmvjvvn7m5nrpc6cd981gui8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kuba.firebasetutorial",
+            "certificate_hash": "44f5b51b7bd74107c8b4b681d1feaa79bc6b154a"
+          }
+        },
+        {
           "client_id": "572945808323-1o6109a7mvd9s9c9fnqehfcnuuhd6bk3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

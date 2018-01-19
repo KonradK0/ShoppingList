@@ -7,25 +7,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.kuba.firebasetutorial.database.Database;
+import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.concurrent.TimeUnit;
-
 public class MainActivity extends AppCompatActivity {
-
-    private DatabaseReference databaseReference;
-
+    Database db;
     private EditText loginField;
     private EditText passwordField;
-    private Button registerBtn;
-
-    public static int userCounter;
-
     boolean userFound;
 
     @Override
@@ -33,75 +28,32 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("THERE WE FUCKIN 1");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_view);
+        db = FireDatabase.getInstance();
+        loginField = findViewById(R.id.loginEditText);
+        passwordField = findViewById(R.id.pwEditText);
         //userFound = false;
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("numberofusers").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    if (dataSnapshot.getValue() != null) {
-                        try {
-                            String str = dataSnapshot.getValue().toString(); // your name values you will get here
-                            userCounter = Integer.parseInt(str);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.out.println("tag is null");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
 
     public void onClickLogin(View view) {
         userFound = false;
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (!userFound) {
-                    System.out.println("THERE WE FUCKIN 2");
-                    loginField = findViewById(R.id.loginEditText);
-                    passwordField = findViewById(R.id.pwEditText);
-                    registerBtn = findViewById(R.id.register_btn);
-                    Log.e("Count ", "" + snapshot.getChildrenCount());
-                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        User user = postSnapshot.getValue(User.class);
-                        if (loginField.getText().toString().equals(user.login)) {
-                            if (passwordField.getText().toString().equals(user.password)) {
-                                userFound = true;
-                                StartView(user.uid);
-                                break;
-                            }
-                        }
-                        Log.e("Get login", user.login);
-                        Log.e("Get password", user.password);
-                        Log.e("Get uid", user.uid);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("The read failed: ", databaseError.getMessage());
-            }
-        });
+        User found = db.checkCredentials(loginField.getText().toString(), passwordField.getText().toString(), userFound);
+        Log.i("userLogin", found.getLogin());
+        Log.i("userPw", found.getPassword());
+        if(found.isEmpty()){
+            Toast.makeText(getApplicationContext(), "USER NOT FOUND", Toast.LENGTH_LONG).show();
+        }
+        else {
+            startView(found.getUid());
+        }
     }
 
-    void StartView(String user) {
+    void startView(String userID) {
         Intent intent = new Intent(this, LoggedInScreen.class);
-        intent.putExtra("USERID", user);
+        intent.putExtra("USERID", userID);
         startActivity(intent);
     }
 
     public void onClickRegister(View view) {
-        System.out.println("usercounter: " + userCounter);
         startActivity(new Intent(this, RegisterScreen.class));
     }
 }
