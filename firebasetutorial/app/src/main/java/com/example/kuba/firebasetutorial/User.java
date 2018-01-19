@@ -17,7 +17,7 @@ public class User implements Serializable {
     List<Message> messages;
 
     public User() {}
-    
+
     public User(String login, String password, List<ShoppingList> shoppingLists, List<Message> messages) {
         this.login = login;
         this.password = password;
