@@ -3,27 +3,22 @@ package com.example.kuba.firebasetutorial;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kuba on 17/01/2018.
  */
 
 public class User implements Serializable{
-    String uid;
+    //String uid;
     String login;
     String password;
+    List<ShoppingList> shoppingLists;
 
-    public User() {
-    }
-
-    public User(String uid, String login, String password) {
-        this.uid = uid;
+    public User( String login, String password, List<ShoppingList> shoppingLists) {
         this.login = login;
         this.password = password;
-    }
-
-    public String getUid() {
-        return uid;
+        this.shoppingLists = shoppingLists;
     }
 
     public String getLogin() {
@@ -34,11 +29,9 @@ public class User implements Serializable{
         return password;
     }
 
-    public static User empty(){
-        return new User("", "", "");
+    public List<ShoppingList> getShoppingLists() {
+        return shoppingLists;
     }
 
-    public boolean isEmpty(){
-        return "".equals(uid) && "".equals(login) && "".equals(password);
-    }
+
 }

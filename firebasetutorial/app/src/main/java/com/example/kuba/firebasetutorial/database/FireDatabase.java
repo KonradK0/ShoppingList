@@ -23,8 +23,6 @@ public final class FireDatabase implements Database {
 
     @Override
     public int getUserCount() {
-        UserCountVEL userCountVEL = new UserCountVEL();
-        //firebaseDatabase.getReference().child("numberofusers").addValueEventListener(userCountVEL);
         firebaseDatabase.getReference().child("numberofusers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

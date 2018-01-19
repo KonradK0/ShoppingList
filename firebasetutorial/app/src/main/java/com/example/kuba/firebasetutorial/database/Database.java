@@ -1,6 +1,5 @@
 package com.example.kuba.firebasetutorial.database;
 
-import com.example.kuba.firebasetutorial.User;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -11,7 +10,6 @@ public interface Database {
 
     int getUserCount();
     int getListsCount();
-    //User checkCredentials(String name, String password, boolean userFound);
     int incrementUserCounter();
 
     FirebaseDatabase getFirebaseDatabase();

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("Count ", "" + snapshot.getChildrenCount());
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         User user = postSnapshot.getValue(User.class);
+                        String uid = postSnapshot.getKey();
                         Log.e("Get login", user.getLogin());
                         if (loginField.getText().toString().equals(user.getLogin())) {
                             if (passwordField.getText().toString().equals(user.getPassword())) {
@@ -48,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
                                 userFound = true;
                                 Log.e("PO CREDENTIALS", Boolean.valueOf(userFound).toString());
                                 Log.e("Get password", user.getPassword());
-                                startView(user.getUid());
+                                startView(uid);
                                 break;
                             }
                         }
-                        Log.e("Get uid", user.getUid());
+                        Log.e("Get uid", uid);
                     }
-                    if(!userFound) {
+                    if (!userFound) {
                         Toast.makeText(getApplicationContext(), "USER NOT FOUND", Toast.LENGTH_LONG).show();
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
