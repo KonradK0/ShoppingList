@@ -55,7 +55,7 @@ public class MessagesScreen extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    postSnapshot.child("");
+                    Message message = postSnapshot.getValue(Message.class);
                 }
             }
 

@@ -9,16 +9,20 @@ import java.util.List;
  * Created by Kuba on 17/01/2018.
  */
 
-public class User implements Serializable{
+public class User implements Serializable {
     //String uid;
     String login;
     String password;
     List<ShoppingList> shoppingLists;
+    List<Message> messages;
 
-    public User( String login, String password, List<ShoppingList> shoppingLists) {
+    public User() {}
+    
+    public User(String login, String password, List<ShoppingList> shoppingLists, List<Message> messages) {
         this.login = login;
         this.password = password;
         this.shoppingLists = shoppingLists;
+        this.messages = messages;
     }
 
     public String getLogin() {
@@ -33,5 +37,8 @@ public class User implements Serializable{
         return shoppingLists;
     }
 
+    public List<Message> getMessages() {
+        return messages;
+    }
 
 }
