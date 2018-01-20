@@ -1,31 +1,29 @@
 package com.example.kuba.firebasetutorial;
 
+import java.io.Serializable;
+
 /**
  * Created by Konrad on 19.01.2018.
  */
 
-public class Message {
+public class Message implements Serializable{
 
-    String title;
     String fromUid;
     String fromName;
     String toUid;
     String toName;
     String text;
+    String timeStamp;
 
     Message(){ }
 
-    public Message(String title, String fromUid, String fromName, String toUid, String toName, String text) {
-        this.title = title;
+    public Message(String fromUid, String fromName, String toUid, String toName, String text, String timeStamp) {
         this.fromUid = fromUid;
         this.fromName = fromName;
         this.toUid = toUid;
         this.toName = toName;
         this.text = text;
-    }
-
-    public String getTitle() {
-        return title;
+        this.timeStamp = timeStamp;
     }
 
     public String getFromUid() {
@@ -46,5 +44,9 @@ public class Message {
 
     public String getText() {
         return text;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
     }
 }

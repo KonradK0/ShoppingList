@@ -20,7 +20,7 @@
         <activity android:name=".LoggedInScreen" />
         <activity android:name=".SearchProductsScreen" />
         <activity android:name=".MessagesScreen" />
-        <activity android:name=".SingleMessage" />
+        <activity android:name=".Conversation" />
         <activity android:name=".WriteNewMessageScreen"></activity>
     </application>
 

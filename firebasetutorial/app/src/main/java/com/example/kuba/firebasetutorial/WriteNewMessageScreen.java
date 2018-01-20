@@ -1,5 +1,6 @@
 package com.example.kuba.firebasetutorial;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
 public class WriteNewMessageScreen extends AppCompatActivity {
     EditText recipientEditText;
-    EditText titleEditText;
     EditText messageEditText;
     Button sendButton;
     Database db;
@@ -28,13 +30,13 @@ public class WriteNewMessageScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_new_message_screen);
         recipientEditText = findViewById(R.id.message_to);
-        titleEditText = findViewById(R.id.title_edit_text);
+        recipientEditText.setText(getIntent().getStringExtra("RECIPENTNAME"));
         messageEditText = findViewById(R.id.new_message_edit_text);
         sendButton = findViewById(R.id.send_message_button);
         db = FireDatabase.getInstance();
         uid = getIntent().getStringExtra("USERID");
-        login = getIntent().getStringExtra("LOGIN");
         messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
+        login = getIntent().getStringExtra("LOGIN");
     }
 
     public void sendMessageOnClick(View view) {
@@ -45,20 +47,24 @@ public class WriteNewMessageScreen extends AppCompatActivity {
                     if(postSnapshot.getValue(User.class).getLogin().equals(recipientEditText.getText().toString())){
                         String recipientUid = postSnapshot.getKey();
                         User recipient = postSnapshot.getValue(User.class);
-                        Message message = new Message(titleEditText.getText().toString(), uid, login, recipientUid, recipient.getLogin(), messageEditText.getText().toString());
+                        Message message = new Message(uid, login, recipientUid, recipient.getLogin(), messageEditText.getText().toString(), String.valueOf(new Date().getTime()));
                         db.getFirebaseDatabase()
                                 .getReference()
                                 .child("users")
                                 .child(recipientUid)
-                                .child("messages")
-                                .child(String.valueOf(recipient.getMessagesCount() + 1)).setValue(message);
+                                .child("messagesReceived")
+                                .child(String.valueOf(recipient.getMessagesReceivedCount() + 1)).setValue(message);
                         db.getFirebaseDatabase()
                                 .getReference("users")
                                 .child(uid)
-                                .child("messages")
-                                .child(String.valueOf(messageCount + 1))
+                                .child("messagesSent")
+                                .child(String.valueOf(++messageCount))
                                 .setValue(message);
-                        return;
+                        Intent intent = new Intent(getApplicationContext(), MessagesScreen.class);
+                        intent.putExtra("USERID", uid);
+                        intent.putExtra("LOGIN", login);
+                        intent.putExtra("MESSAGECOUNT", messageCount);
+                        startActivity(intent);
                     }
                 }
             }

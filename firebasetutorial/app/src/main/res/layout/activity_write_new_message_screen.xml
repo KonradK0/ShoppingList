@@ -22,8 +22,8 @@
     <EditText
         android:id="@+id/new_message_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="211dp"
-        android:layout_marginBottom="136dp"
+        android:layout_height="343dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
@@ -41,22 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="8dp"
         android:onClick="sendMessageOnClick"
         android:text="@string/send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_message_edit_text" />
 
-    <EditText
-        android:id="@+id/title_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="@string/title"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message_to" />
 </android.support.constraint.ConstraintLayout>

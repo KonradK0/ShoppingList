@@ -18,25 +18,31 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class MessagesScreen extends AppCompatActivity {
-    Database db;
+    static Database db = FireDatabase.getInstance();;
     LinearLayout messagesLinLayout;
     CardView newMessageCardView;
     String uid;
-    final Map<String, ArrayList<String>> messagesFromUsers = new HashMap<>();
+    String login;
     long messageCount;
+    final Map<String, ArrayList<Message>> messagesReceived = new HashMap<>();
+    final Map<String, ArrayList<Message>> messagesSent = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages_screen);
+        login = getIntent().getStringExtra("LOGIN");
+        uid = getIntent().getStringExtra("USERID");
+        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
         messagesLinLayout = findViewById(R.id.users_messages);
         newMessageCardView = findViewById(R.id.new_message_card_view);
-        db = FireDatabase.getInstance();
-        uid = getIntent().getStringExtra("USERID");
-        getUsersMessages();
+        getUsersMessages("messagesReceived", messagesReceived);
+        getUsersMessages("messagesSent", messagesSent);
         setNewMessageCardViewOnClickListener();
     }
 
@@ -46,6 +52,8 @@ public class MessagesScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WriteNewMessageScreen.class);
                 intent.putExtra("USERID", uid);
+                intent.putExtra("LOGIN", login);
+                intent.putExtra("RECIPENTNAME", "");
                 intent.putExtra("MESSAGECOUNT", messageCount);
                 startActivity(intent);
             }
@@ -64,39 +72,47 @@ public class MessagesScreen extends AppCompatActivity {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SingleMessage.class);
-                intent.putExtra("FROM", from);
-                intent.putExtra("MESSAGES", messagesFromUsers.get(from));
+                Intent intent = new Intent(getApplicationContext(), Conversation.class);
+                intent.putExtra("LOGIN", login);
+                intent.putExtra("USERID", uid);
+                intent.putExtra("MESSAGECOUNT", messageCount);
+                intent.putExtra("MESSAGESSENT", messagesSent.get(from));
+                intent.putExtra("MESSAGESRECEIVED", messagesReceived.get(from));
+                intent.putExtra("SENTCOUNT", messagesSent.size());
+                intent.putExtra("RECEIVEDCOUNT", messagesReceived.size());
                 startActivity(intent);
             }
         });
     }
 
-    void setupMessageBox(String from, int index) {
-        CardView messageCardView = inflateMessageBox(from, index);
-        setOnMessageBoxOnClick(messageCardView, from);
+    public void setupMessageBox() {
+        messagesLinLayout.removeAllViews();
+        int currentUser = 0;
+        Set<String> allConversations = new HashSet<>();
+        allConversations.addAll(messagesSent.keySet());
+        allConversations.addAll(messagesReceived.keySet());
+        for (String user : allConversations) {
+            CardView messageCardView = inflateMessageBox(user, currentUser++);
+            setOnMessageBoxOnClick(messageCardView, user);
+        }
     }
 
-    public void getUsersMessages() {
-        final DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messages");
+    public void getUsersMessages(String direction, final Map<String, ArrayList<Message>> userMessages) {
+        final DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users")
+                .child(uid)
+                .child(direction);
         messages.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                messageCount = dataSnapshot.getChildrenCount();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Message message = postSnapshot.getValue(Message.class);
-                    String from = message.getFromUid(); //TODO message.getFromName() jak zmienimy loginy na unikalne
-                    String text = message.getText();
-                    if (messagesFromUsers.get(from) == null) {
-                        messagesFromUsers.put(from, new ArrayList<String>());
+                    String from = login.equals(message.getFromName())? message.getToName() : message.getFromName(); //TODO message.getFromName() jak zmienimy loginy na unikalne
+                    if (userMessages.get(from) == null) {
+                        userMessages.put(from, new ArrayList<Message>());
                     }
-                    messagesFromUsers.get(from).add(text);
+                    userMessages.get(from).add(message);
                 }
-
-                int currentUser = 0;
-                for (String user : messagesFromUsers.keySet()) {
-                    setupMessageBox(user, currentUser++);
-                }
+                    setupMessageBox();
             }
 
             @Override

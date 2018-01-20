@@ -19,4 +19,5 @@
     <string name="write_your_message">Wpisz swoja wiadomosc…</string>
     <string name="send">Wyslij</string>
     <string name="title">Tytuł</string>
+    <string name="type">Napisz coś…</string>
 </resources>

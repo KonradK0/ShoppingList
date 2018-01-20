@@ -51,7 +51,7 @@ public class RegisterScreen extends AppCompatActivity {
         ShoppingList shoppingList1 = new ShoppingList("-2", "lista_abc", productArrayList);
         arrayList.add(shoppingList);
 
-        User user = new User(login.getText().toString(), password.getText().toString(), arrayList, messageArrayList);
+        User user = new User(login.getText().toString(), password.getText().toString(), arrayList, new ArrayList<Message>(), new ArrayList<Message>());
         newPostRef.setValue(user);
 
         startActivity(new Intent(this, MainActivity.class));

@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText loginField;
     private EditText passwordField;
     public boolean userFound;
+    User found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("Get login", user.getLogin());
                         if (loginField.getText().toString().equals(user.getLogin())) {
                             if (passwordField.getText().toString().equals(user.getPassword())) {
+                                found = user;
                                 Log.e("PRZED CREDENTIALS", Boolean.valueOf(userFound).toString());
                                 userFound = true;
                                 Log.e("PO CREDENTIALS", Boolean.valueOf(userFound).toString());
@@ -69,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void startView(String userID) {
-        Intent intent = new Intent(this, MessagesScreen.class);
+        Intent intent = new Intent(this, LoggedInScreen.class);
         intent.putExtra("LOGIN", loginField.getText().toString());
         intent.putExtra("USERID", userID);
+        intent.putExtra("MESSAGECOUNT", found.getMessagesSentCount());
         startActivity(intent);
     }
 

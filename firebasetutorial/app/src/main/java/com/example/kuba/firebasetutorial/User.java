@@ -1,8 +1,6 @@
 package com.example.kuba.firebasetutorial;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,15 +12,17 @@ public class User implements Serializable {
     String login;
     String password;
     List<ShoppingList> shoppingLists;
-    List<Message> messages;
+    List<Message> messagesReceived;
+    List<Message> messagesSent;
 
     public User() {}
 
-    public User(String login, String password, List<ShoppingList> shoppingLists, List<Message> messages) {
+    public User(String login, String password, List<ShoppingList> shoppingLists, List<Message> messagesReceived, List<Message> messagesSent) {
         this.login = login;
         this.password = password;
         this.shoppingLists = shoppingLists;
-        this.messages = messages;
+        this.messagesReceived = messagesReceived;
+        this.messagesSent = messagesSent;
     }
 
     public String getLogin() {
@@ -37,12 +37,20 @@ public class User implements Serializable {
         return shoppingLists;
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    public List<Message> getMessagesReceived() {
+        return messagesReceived;
     }
 
-    public long getMessagesCount(){
-        return messages == null? 0 : messages.size();
+    public List<Message> getMessagesSent() {
+        return messagesSent;
+    }
+
+    public long getMessagesReceivedCount(){
+        return messagesReceived == null? -1 : messagesReceived.size();
+    }
+
+    public long getMessagesSentCount(){
+        return messagesSent == null ? -1 : messagesSent.size();
     }
 
 }
