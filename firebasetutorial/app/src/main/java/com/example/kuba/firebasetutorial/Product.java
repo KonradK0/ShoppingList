@@ -10,9 +10,11 @@ public class Product implements Serializable {
     String productid;
     String name;
 
+
     public Product(String productid, String name) {
         this.productid = productid;
         this.name = name;
+
     }
 
     public Product() {
@@ -21,4 +23,9 @@ public class Product implements Serializable {
     public String getProductid() {
         return productid;
     }
+
+    public String getName() {
+        return name;
+    }
+
 }

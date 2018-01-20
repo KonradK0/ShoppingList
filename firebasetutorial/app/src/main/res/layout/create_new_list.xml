@@ -8,6 +8,13 @@
     tools:context="com.konrad.shoppinglist.SearchProductsScreen">
 
 
+    <TextView
+        android:id="@+id/listNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
     <EditText
         android:id="@+id/search_text"
         android:layout_width="match_parent"
@@ -15,7 +22,8 @@
         android:layout_marginTop="10sp"
         android:ems="10"
         android:hint="@string/search"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
 
 
     <ScrollView
@@ -27,7 +35,7 @@
             android:id="@+id/search_lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
         </LinearLayout>
     </ScrollView>

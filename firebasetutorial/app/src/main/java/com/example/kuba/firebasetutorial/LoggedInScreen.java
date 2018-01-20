@@ -102,21 +102,22 @@ public class LoggedInScreen extends AppCompatActivity {
         });
     }
 
-    private void setOnExistingListCardViewListener(CardView singleListCardView, final String listName) {
+    private void setOnExistingListCardViewListener(CardView singleListCardView, final String listName, final String listId) {
         singleListCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchProductsScreen.class);
                 intent.putExtra("USERID", userId);
                 intent.putExtra("LISTNAME", listName);
+                intent.putExtra("LISTID", listId);
                 startActivity(intent);
             }
         });
     }
 
-    public void setShoppingListBox(String listName, int childIndex) {
+    public void setShoppingListBox(String listName, String listId, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
-        setOnExistingListCardViewListener(singleListCardView, listName);
+        setOnExistingListCardViewListener(singleListCardView, listName, listId);
     }
 
     private CardView inflateShoppingListBox(String listName, int childIndex) {
@@ -139,7 +140,7 @@ public class LoggedInScreen extends AppCompatActivity {
                         DataSnapshot shoppingListRef = dsp.child("shoppingLists");
                         for(DataSnapshot dspShop : shoppingListRef.getChildren()) {
                             Log.i("znaleziono liste: ", dspShop.getValue(ShoppingList.class).getName());
-                            setShoppingListBox(dspShop.getValue(ShoppingList.class).getName(), childrencount);
+                            setShoppingListBox(dspShop.getValue(ShoppingList.class).getName(), dspShop.getValue(ShoppingList.class).getListid(), childrencount);
                             childrencount++;
                         }
                         currentRef = dsp.getRef().child("shoppingLists");
