@@ -20,6 +20,8 @@ public class WriteNewMessageScreen extends AppCompatActivity {
     Button sendButton;
     Database db;
     String uid;
+    String login;
+    long messageCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +33,34 @@ public class WriteNewMessageScreen extends AppCompatActivity {
         sendButton = findViewById(R.id.send_message_button);
         db = FireDatabase.getInstance();
         uid = getIntent().getStringExtra("USERID");
+        login = getIntent().getStringExtra("LOGIN");
+        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
     }
 
     public void sendMessageOnClick(View view) {
-        db.getFirebaseDatabase().getReference().child("users").child(uid).child("login").addValueEventListener(new ValueEventListener() {
+        db.getFirebaseDatabase().getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists()){
-//                    return;
-//                }
-                String recipientKey = dataSnapshot.getValue(String.class);
-                Message message = new Message(titleEditText.getText().toString(), recipientKey, uid, messageEditText.getText().toString());
-                DatabaseReference senderRef = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messages").push();
-                senderRef.setValue(message);
-                DatabaseReference recipientRef = db.getFirebaseDatabase().getReference().child("users").child(recipientKey).child("messages").push();
-                recipientRef.setValue(message);
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                    if(postSnapshot.getValue(User.class).getLogin().equals(recipientEditText.getText().toString())){
+                        String recipientUid = postSnapshot.getKey();
+                        User recipient = postSnapshot.getValue(User.class);
+                        Message message = new Message(titleEditText.getText().toString(), uid, login, recipientUid, recipient.getLogin(), messageEditText.getText().toString());
+                        db.getFirebaseDatabase()
+                                .getReference()
+                                .child("users")
+                                .child(recipientUid)
+                                .child("messages")
+                                .child(String.valueOf(recipient.getMessagesCount() + 1)).setValue(message);
+                        db.getFirebaseDatabase()
+                                .getReference("users")
+                                .child(uid)
+                                .child("messages")
+                                .child(String.valueOf(messageCount + 1))
+                                .setValue(message);
+                        return;
+                    }
+                }
             }
 
             @Override

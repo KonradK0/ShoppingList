@@ -41,4 +41,8 @@ public class User implements Serializable {
         return messages;
     }
 
+    public long getMessagesCount(){
+        return messages == null? 0 : messages.size();
+    }
+
 }

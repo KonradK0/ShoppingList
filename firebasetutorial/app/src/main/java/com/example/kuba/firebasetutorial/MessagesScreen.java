@@ -26,6 +26,7 @@ public class MessagesScreen extends AppCompatActivity {
     CardView newMessageCardView;
     String uid;
     final Map<String, ArrayList<String>> messagesFromUsers = new HashMap<>();
+    long messageCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MessagesScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WriteNewMessageScreen.class);
                 intent.putExtra("USERID", uid);
+                intent.putExtra("MESSAGECOUNT", messageCount);
                 startActivity(intent);
             }
         });
@@ -76,13 +78,14 @@ public class MessagesScreen extends AppCompatActivity {
     }
 
     public void getUsersMessages() {
-        DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messages");
+        final DatabaseReference messages = db.getFirebaseDatabase().getReference().child("users").child(uid).child("messages");
         messages.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                messageCount = dataSnapshot.getChildrenCount();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Message message = postSnapshot.getValue(Message.class);
-                    String from = message.getFromUid();
+                    String from = message.getFromUid(); //TODO message.getFromName() jak zmienimy loginy na unikalne
                     String text = message.getText();
                     if (messagesFromUsers.get(from) == null) {
                         messagesFromUsers.put(from, new ArrayList<String>());

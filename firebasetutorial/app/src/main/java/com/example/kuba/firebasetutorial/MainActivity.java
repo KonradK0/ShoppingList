@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void startView(String userID) {
-        Intent intent = new Intent(this, LoggedInScreen.class);
+        Intent intent = new Intent(this, MessagesScreen.class);
+        intent.putExtra("LOGIN", loginField.getText().toString());
         intent.putExtra("USERID", userID);
         startActivity(intent);
     }

@@ -39,8 +39,8 @@ public class RegisterScreen extends AppCompatActivity {
         DatabaseReference newPostRef = db.getFirebaseDatabase().getReference().child("users").push();
 
         ArrayList<Message> messageArrayList = new ArrayList<>();
-        Message message = new Message("dddd", "d", "to jest d");
-        messageArrayList.add(message);
+        //Message message = new Message("dddd", "d", "e", "to jest d");
+        //messageArrayList.add(message);
         ArrayList<ShoppingList> arrayList = new ArrayList<>();
         ArrayList<Product> productArrayList = new ArrayList<>();
         Product product = new Product("-1", "xyz");

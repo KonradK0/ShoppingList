@@ -16,7 +16,6 @@ public final class FireDatabase implements Database {
     private static int userCounter = getInstance().getUserCount();
 
     private FireDatabase() {
-        instance = new FireDatabase();
         if (firebaseDatabase == null) {
             firebaseDatabase = FirebaseDatabase.getInstance();
         }
