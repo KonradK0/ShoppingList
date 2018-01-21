@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Konrad on 19.01.2018.
  */
 
-public class Message implements Serializable{
+public class Message implements Serializable {
 
     String fromUid;
     public String fromName;
@@ -15,7 +15,8 @@ public class Message implements Serializable{
     String text;
     String timeStamp;
 
-    Message(){ }
+    Message() {
+    }
 
     public Message(String fromUid, String fromName, String toUid, String toName, String text, String timeStamp) {
         this.fromUid = fromUid;

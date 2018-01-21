@@ -12,9 +12,9 @@ import java.util.Comparator;
 
 class ConversationScreenModel {
 
-    void setMessages(ArrayList<Message> received, ArrayList<Message> sent, ArrayList<Message> messages){
-        if(received != null) messages.addAll(received);
-        if(sent != null) messages.addAll(sent);
+    void setMessages(ArrayList<Message> received, ArrayList<Message> sent, ArrayList<Message> messages) {
+        if (received != null) messages.addAll(received);
+        if (sent != null) messages.addAll(sent);
 
         Collections.sort(messages, new Comparator<Message>() {
             @Override

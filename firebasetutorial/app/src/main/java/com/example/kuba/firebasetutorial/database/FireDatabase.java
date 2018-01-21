@@ -111,7 +111,7 @@ public final class FireDatabase implements Database {
 
     @Override
     public void addProductToList(final String userId, final String productName, final String listId) {
-        final DatabaseReference listRef = FireDatabase.getInstance().getFirebaseDatabase().getReference().child("users").child(userId).child("shoppingLists")
+        final DatabaseReference listRef = firebaseDatabase.getReference().child("users").child(userId).child("shoppingLists")
                 .child(listId).child("productList");
         listRef.addListenerForSingleValueEvent(new ValueEventListener() {
             int childrencounter;

@@ -38,6 +38,7 @@ public class LoggedInScreenView extends AppCompatActivity {
     CardView newListCardView;
     LinearLayout allLists;
     LoggedInScreenControler controler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,7 @@ public class LoggedInScreenView extends AppCompatActivity {
         singleListCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controler.startSearchProductsActivity(listName,listId);
+                controler.startSearchProductsActivity(listName, listId);
             }
         });
     }

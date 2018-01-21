@@ -33,11 +33,11 @@ public class LoggedInScreenControler {
         messageCount = view.getIntent().getLongExtra("MESSAGECOUNT", -1);
     }
 
-    void handleAddNewList(String listName){
+    void handleAddNewList(String listName) {
         model.addNewList(listName);
     }
 
-    void handleGetAllLists(){
+    void handleGetAllLists() {
         model.getAllLists();
         Log.e("LISTCOUNT", String.valueOf(listCount));
     }
@@ -46,7 +46,7 @@ public class LoggedInScreenControler {
         this.listCount = listCount;
     }
 
-    void startSearchProductsActivity(String listName, String listId){
+    void startSearchProductsActivity(String listName, String listId) {
         Intent intent = new Intent(view, SearchProductsScreen.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);
@@ -56,7 +56,7 @@ public class LoggedInScreenControler {
         view.startActivity(intent);
     }
 
-    void startNewMessagesActivity(){
+    void startNewMessagesActivity() {
         Intent intent = new Intent(view, MessagesScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);
@@ -64,7 +64,7 @@ public class LoggedInScreenControler {
         view.startActivity(intent);
     }
 
-    void restartActivity(){
+    void restartActivity() {
         Intent intent = new Intent(view, MessagesScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);

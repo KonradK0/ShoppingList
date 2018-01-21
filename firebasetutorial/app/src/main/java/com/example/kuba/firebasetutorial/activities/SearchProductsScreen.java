@@ -263,7 +263,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                     if (!productExists) {
                         lastChildRef.setValue(new Product(strings[0]));
                     }
-                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0],getIntent().getStringExtra("LISTID"));
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], getIntent().getStringExtra("LISTID"));
                 }
 
                 @Override
@@ -312,7 +312,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user added as an owner", Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0],getIntent().getStringExtra("LISTID"));
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], getIntent().getStringExtra("LISTID"));
                 }
 
                 @Override

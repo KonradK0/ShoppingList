@@ -8,14 +8,14 @@ import java.util.List;
  */
 
 public class User implements Serializable {
-    //String uid;
     String login;
     String password;
     List<ShoppingList> shoppingLists;
     List<Message> messagesReceived;
     List<Message> messagesSent;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String login, String password, List<ShoppingList> shoppingLists, List<Message> messagesReceived, List<Message> messagesSent) {
         this.login = login;
@@ -45,11 +45,11 @@ public class User implements Serializable {
         return messagesSent;
     }
 
-    public long getMessagesReceivedCount(){
-        return messagesReceived == null? -1 : messagesReceived.size();
+    public long getMessagesReceivedCount() {
+        return messagesReceived == null ? -1 : messagesReceived.size();
     }
 
-    public long getMessagesSentCount(){
+    public long getMessagesSentCount() {
         return messagesSent == null ? -1 : messagesSent.size();
     }
 

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 public class RegisterScreenView extends AppCompatActivity {
     Database db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class RegisterScreenView extends AppCompatActivity {
 
     public void onClickRegister(View view) {
         EditText login = findViewById(R.id.loginEditText);
-        EditText password =  findViewById(R.id.passwordEditText);
+        EditText password = findViewById(R.id.passwordEditText);
         db.addNewUser(login.getText().toString(), password.getText().toString());
         startActivity(new Intent(this, MainActivityView.class));
     }

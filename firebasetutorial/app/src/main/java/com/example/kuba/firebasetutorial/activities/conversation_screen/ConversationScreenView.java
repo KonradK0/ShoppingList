@@ -30,7 +30,7 @@ public class ConversationScreenView extends AppCompatActivity {
         setAnswerOnClick();
     }
 
-    private void setAnswerOnClick(){
+    private void setAnswerOnClick() {
         answerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,17 +47,16 @@ public class ConversationScreenView extends AppCompatActivity {
         return singleListCardView;
     }
 
-    private void showMessages(){
+    private void showMessages() {
         int messagesCount = 0;
-        for(Message message : controller.messages){
+        for (Message message : controller.messages) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(20,20,20,20);
+            params.setMargins(20, 20, 20, 20);
             CardView messageCardView = inflateMessageBox(message.getText(), messagesCount++);
-            if(controller.login.equals(message.fromName)){
+            if (controller.login.equals(message.fromName)) {
                 messageCardView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.lightGrey));
                 params.gravity = Gravity.START;
-            }
-            else{
+            } else {
                 params.gravity = Gravity.END;
             }
             messageCardView.setLayoutParams(params);

@@ -30,7 +30,7 @@ public class MessagesScreenView extends AppCompatActivity {
         setNewMessageCardViewOnClickListener();
     }
 
-    public void onClickHome(View view){
+    public void onClickHome(View view) {
         controller.startHomeActivity();
     }
 

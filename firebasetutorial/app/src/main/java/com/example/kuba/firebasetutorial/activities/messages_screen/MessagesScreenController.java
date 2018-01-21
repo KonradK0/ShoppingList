@@ -48,7 +48,7 @@ class MessagesScreenController {
 
     }
 
-    void startHomeActivity(){
+    void startHomeActivity() {
         Intent intent = new Intent(view, LoggedInScreenView.class);
         intent.putExtra("USERID", uid);
         intent.putExtra("LOGIN", login);
@@ -56,7 +56,7 @@ class MessagesScreenController {
         view.startActivity(intent);
     }
 
-    void startNewConversationActivity(final String from){
+    void startNewConversationActivity(final String from) {
         Intent intent = new Intent(view, ConversationScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", uid);
