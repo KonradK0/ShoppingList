@@ -1,11 +1,11 @@
-package com.example.kuba.firebasetutorial.messages_screen;
+package com.example.kuba.firebasetutorial.activities.messages_screen;
 
 import android.content.Intent;
 
-import com.example.kuba.firebasetutorial.conversation_screen.ConversationScreenView;
-import com.example.kuba.firebasetutorial.LoggedInScreen;
+import com.example.kuba.firebasetutorial.activities.conversation_screen.ConversationScreenView;
+import com.example.kuba.firebasetutorial.activities.LoggedInScreen;
 import com.example.kuba.firebasetutorial.Message;
-import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenView;
+import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by Konrad on 21.01.2018.
  */
 
-public class MessagesScreenController {
+class MessagesScreenController {
     MessagesScreenView view;
     private MessagesScreenModel model;
     private String login;

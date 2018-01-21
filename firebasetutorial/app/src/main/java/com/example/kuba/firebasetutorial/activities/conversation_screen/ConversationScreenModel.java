@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial.conversation_screen;
+package com.example.kuba.firebasetutorial.activities.conversation_screen;
 
 import com.example.kuba.firebasetutorial.Message;
 
@@ -10,7 +10,7 @@ import java.util.Comparator;
  * Created by Konrad on 21.01.2018.
  */
 
-public class ConversationScreenModel {
+class ConversationScreenModel {
 
     void setMessages(ArrayList<Message> received, ArrayList<Message> sent, ArrayList<Message> messages){
         if(received != null) messages.addAll(received);

@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial;
+package com.example.kuba.firebasetutorial.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -18,7 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.kuba.firebasetutorial.all_products_from_database.AllProductsFromDatabaseView;
+import com.example.kuba.firebasetutorial.Product;
+import com.example.kuba.firebasetutorial.R;
+import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

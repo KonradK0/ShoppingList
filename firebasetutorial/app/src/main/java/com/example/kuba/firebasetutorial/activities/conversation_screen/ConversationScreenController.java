@@ -1,9 +1,9 @@
-package com.example.kuba.firebasetutorial.conversation_screen;
+package com.example.kuba.firebasetutorial.activities.conversation_screen;
 
 import android.content.Intent;
 
 import com.example.kuba.firebasetutorial.Message;
-import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenView;
+import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenView;
 
 import java.util.ArrayList;
 
@@ -11,15 +11,15 @@ import java.util.ArrayList;
  * Created by Konrad on 21.01.2018.
  */
 
-public class ConversationScreenController {
-    ConversationScreenView view;
-    ConversationScreenModel model;
+class ConversationScreenController {
+    private ConversationScreenView view;
+    private ConversationScreenModel model;
     ArrayList<Message> messages;
     String login;
-    String uid;
-    long messageCount;
+    private String uid;
+    private long messageCount;
 
-    public ConversationScreenController(ConversationScreenView view) {
+    ConversationScreenController(ConversationScreenView view) {
         this.view = view;
         this.model = new ConversationScreenModel();
         login = view.getIntent().getStringExtra("LOGIN");

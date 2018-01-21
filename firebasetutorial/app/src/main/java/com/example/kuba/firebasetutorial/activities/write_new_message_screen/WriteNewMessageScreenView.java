@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial.write_new_message_screen;
+package com.example.kuba.firebasetutorial.activities.write_new_message_screen;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

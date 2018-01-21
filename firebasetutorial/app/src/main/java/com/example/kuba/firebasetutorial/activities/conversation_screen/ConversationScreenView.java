@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial.conversation_screen;
+package com.example.kuba.firebasetutorial.activities.conversation_screen;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;

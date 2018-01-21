@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_activity.MainActivityView">
+        <activity android:name=".activities.main_activity.MainActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterScreen" />
-        <activity android:name=".LoggedInScreen" />
-        <activity android:name=".SearchProductsScreen" />
-        <activity android:name=".messages_screen.MessagesScreenView" />
-        <activity android:name=".conversation_screen.ConversationScreenView" />
-        <activity android:name=".write_new_message_screen.WriteNewMessageScreenView"></activity>
-        <activity android:name=".all_products_from_database.AllProductsFromDatabaseView"/>
+        <activity android:name=".activities.RegisterScreen" />
+        <activity android:name=".activities.LoggedInScreen" />
+        <activity android:name=".activities.SearchProductsScreen" />
+        <activity android:name=".activities.messages_screen.MessagesScreenView" />
+        <activity android:name=".activities.conversation_screen.ConversationScreenView" />
+        <activity android:name=".activities.write_new_message_screen.WriteNewMessageScreenView"></activity>
+        <activity android:name=".activities.all_products_from_database.AllProductsFromDatabaseView"/>
     </application>
 
 </manifest>

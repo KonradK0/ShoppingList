@@ -1,12 +1,9 @@
 package com.example.kuba.firebasetutorial.database;
 
-import android.content.Context;
-
 import com.example.kuba.firebasetutorial.Message;
-import com.example.kuba.firebasetutorial.main_activity.MainActivityController;
-import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
-import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenController;
-import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenView;
+import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityController;
+import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
+import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenController;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;

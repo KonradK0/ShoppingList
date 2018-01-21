@@ -1,11 +1,10 @@
-package com.example.kuba.firebasetutorial.main_activity;
+package com.example.kuba.firebasetutorial.activities.main_activity;
 
 import android.content.Intent;
 
-import com.example.kuba.firebasetutorial.LoggedInScreen;
-import com.example.kuba.firebasetutorial.RegisterScreen;
+import com.example.kuba.firebasetutorial.activities.LoggedInScreen;
+import com.example.kuba.firebasetutorial.activities.RegisterScreen;
 import com.example.kuba.firebasetutorial.User;
-import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenModel;
 
 /**
  * Created by Konrad on 21.01.2018.

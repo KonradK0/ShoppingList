@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial;
+package com.example.kuba.firebasetutorial.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -17,10 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.kuba.firebasetutorial.Product;
+import com.example.kuba.firebasetutorial.R;
+import com.example.kuba.firebasetutorial.ShoppingList;
+import com.example.kuba.firebasetutorial.User;
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
-import com.example.kuba.firebasetutorial.main_activity.MainActivityView;
-import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
+import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityView;
+import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

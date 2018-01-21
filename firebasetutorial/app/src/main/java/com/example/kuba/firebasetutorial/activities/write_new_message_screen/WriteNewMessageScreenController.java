@@ -1,21 +1,21 @@
-package com.example.kuba.firebasetutorial.write_new_message_screen;
+package com.example.kuba.firebasetutorial.activities.write_new_message_screen;
 
 import android.content.Intent;
 
-import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
+import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
 
 /**
  * Created by Konrad on 21.01.2018.
  */
 
 public class WriteNewMessageScreenController {
-    WriteNewMessageScreenView view;
-    WriteNewMessageScreenModel model;
-    String uid;
-    String login;
-    long messageCount;
+    private WriteNewMessageScreenView view;
+    private WriteNewMessageScreenModel model;
+    private String uid;
+    private String login;
+    private long messageCount;
 
-    public WriteNewMessageScreenController(WriteNewMessageScreenView view) {
+    WriteNewMessageScreenController(WriteNewMessageScreenView view) {
         this.view = view;
         this.model = new WriteNewMessageScreenModel(this);
         this.uid = view.getIntent().getStringExtra("USERID");

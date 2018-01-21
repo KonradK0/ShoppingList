@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kuba.firebasetutorial.main_activity.MainActivityView">
+    tools:context=".activities.main_activity.MainActivityView">
 
     <Button
         android:id="@+id/register_btn"
