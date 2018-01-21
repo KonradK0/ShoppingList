@@ -13,6 +13,40 @@
         android:orientation="vertical"
         tools:context="com.konrad.shoppinglist.DisplayAllListsScreen">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/messagesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:adjustViewBounds="true"
+                android:contentDescription="message button"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"
+                android:scaleType="fitCenter"
+                android:onClick="onClickMessages"
+                app:srcCompat="@drawable/mail" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:contentDescription="log out button"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"
+                android:onClick="onClickLogOut"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/logout" />
+        </LinearLayout>
+
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/new_list_card_view"
             android:layout_width="match_parent"

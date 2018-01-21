@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -36,6 +37,8 @@ public class LoggedInScreen extends AppCompatActivity {
     DatabaseReference dbUsersRef;
     DatabaseReference currentRef;
     private static String userId;
+    String login;
+    long messageCount;
     int childrencount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +47,25 @@ public class LoggedInScreen extends AppCompatActivity {
         allLists = findViewById(R.id.all_lists_layout);
         newListCardView = findViewById(R.id.new_list_card_view);
         userId = getIntent().getStringExtra("USERID");
+        login = getIntent().getStringExtra("LOGIN");
+        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
         db = FireDatabase.getInstance();
         dbUsersRef = db.getFirebaseDatabase().getReference().child("users");
 
         setNewListCardViewListener();
         getAllShoppingLists();
+    }
+
+    public void onClickMessages(View view) {
+        Intent intent = new Intent(getApplicationContext(), MessagesScreen.class);
+        intent.putExtra("LOGIN", login);
+        intent.putExtra("USERID", userId);
+        intent.putExtra("MESSAGECOUNT", messageCount);
+        startActivity(intent);
+    }
+
+    public void onClickLogOut(View view) {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
     private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
