@@ -287,32 +287,28 @@ public class SearchProductsScreen extends AppCompatActivity {
     private class addNewOwnerAsyncTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(final String[] strings) {
-            final DatabaseReference newListRef = db.child("users");
+            final DatabaseReference newListRef = db.child("lists").child(key).child("owners");
             newListRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean userExists = false;
+                    //Owners
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        //System.out.println("strings[0]: " + strings[0] + "  " + String.valueOf(snapshot.child("productname").getValue()));
-                        String key = snapshot.getKey();
-                        User user = snapshot.getValue(User.class);
-                        Log.e("String.valueOf(snapshot.child(key).child(\"login\").getValue()): ", user.getLogin());
-                        if (strings[0].equals(String.valueOf(user.getLogin()))) {
-                            DataSnapshot addListSnapshot = snapshot.child("shoppingLists");
-                            DatabaseReference addListRef = snapshot.child("shoppingLists").getRef();
-                            addListRef.child(String.valueOf(addListSnapshot.getChildrenCount())).setValue(currentList);
+                        Owner owner = snapshot.getValue(Owner.class);
+                        Log.e("String.valueOf(snapshot.child(key).child(\"login\").getValue()): ", owner.getLogin());
+                        if (strings[0].equals(String.valueOf(owner.getLogin()))) {
                             userExists = true;
                             break;
                         }
                     }
                     if (!userExists) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "No " + strings[0] + " user in DB.", Toast.LENGTH_LONG);
+                        newListRef.child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(new Owner(strings[0]));
+                        Toast toast = Toast.makeText(getApplicationContext(),   strings[0] + " added as an owner of this list.", Toast.LENGTH_LONG);
                         toast.show();
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user added as an owner", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user already was an owner.", Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], key);
                 }
 
                 @Override

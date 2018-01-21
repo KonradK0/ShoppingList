@@ -1,6 +1,5 @@
 package com.example.kuba.firebasetutorial.database;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,7 +8,6 @@ import com.example.kuba.firebasetutorial.Product;
 import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
 import com.example.kuba.firebasetutorial.activities.Owner;
-import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseModel;
 import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
 import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenControler;
 import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
@@ -22,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -122,7 +119,6 @@ public final class FireDatabase implements Database {
         final DatabaseReference listRef = firebaseDatabase.getReference().child("lists").child(key).child("productList");
         listRef.addListenerForSingleValueEvent(new ValueEventListener() {
             int childrencounter;
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 childrencounter = 0;
