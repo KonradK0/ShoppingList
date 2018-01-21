@@ -3,7 +3,7 @@ package com.example.kuba.firebasetutorial.activities.messages_screen;
 import android.content.Intent;
 
 import com.example.kuba.firebasetutorial.activities.conversation_screen.ConversationScreenView;
-import com.example.kuba.firebasetutorial.activities.LoggedInScreen;
+import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
 import com.example.kuba.firebasetutorial.Message;
 import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenView;
 
@@ -49,7 +49,7 @@ class MessagesScreenController {
     }
 
     void startHomeActivity(){
-        Intent intent = new Intent(view, LoggedInScreen.class);
+        Intent intent = new Intent(view, LoggedInScreenView.class);
         intent.putExtra("USERID", uid);
         intent.putExtra("LOGIN", login);
         intent.putExtra("MESSAGECOUNT", messageCount);

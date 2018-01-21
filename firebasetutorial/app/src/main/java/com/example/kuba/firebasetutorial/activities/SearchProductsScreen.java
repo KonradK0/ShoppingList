@@ -24,6 +24,7 @@ import com.example.kuba.firebasetutorial.R;
 import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
 import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
+import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.google.firebase.database.DataSnapshot;
@@ -177,7 +178,7 @@ public class SearchProductsScreen extends AppCompatActivity {
     }
 
     public void onClickGoBackToListView(View view) {
-        Intent intent = new Intent(getApplicationContext(), LoggedInScreen.class);
+        Intent intent = new Intent(getApplicationContext(), LoggedInScreenView.class);
         putExtrasAndStartActivity(intent);
     }
 

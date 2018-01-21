@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial.activities;
+package com.example.kuba.firebasetutorial.activities.logged_in_screen;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -21,6 +21,7 @@ import com.example.kuba.firebasetutorial.Product;
 import com.example.kuba.firebasetutorial.R;
 import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
+import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityView;
@@ -33,54 +34,27 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoggedInScreen extends AppCompatActivity {
+public class LoggedInScreenView extends AppCompatActivity {
     CardView newListCardView;
     LinearLayout allLists;
-    Database db;
-    DatabaseReference dbUsersRef;
-    DatabaseReference currentRef;
-    private static String userId;
-    String login;
-    long messageCount;
-    int childrencount;
+    LoggedInScreenControler controler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logged_in_view);
         allLists = findViewById(R.id.all_lists_layout);
         newListCardView = findViewById(R.id.new_list_card_view);
-        userId = getIntent().getStringExtra("USERID");
-        login = getIntent().getStringExtra("LOGIN");
-        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
-        db = FireDatabase.getInstance();
-        dbUsersRef = db.getFirebaseDatabase().getReference().child("users");
-
+        controler = new LoggedInScreenControler(this);
         setNewListCardViewListener();
         getAllShoppingLists();
     }
 
     public void onClickMessages(View view) {
-        Intent intent = new Intent(getApplicationContext(), MessagesScreenView.class);
-        intent.putExtra("LOGIN", login);
-        intent.putExtra("USERID", userId);
-        intent.putExtra("MESSAGECOUNT", messageCount);
-        startActivity(intent);
+        controler.startNewMessagesActivity();
     }
 
     public void onClickLogOut(View view) {
         startActivity(new Intent(getApplicationContext(), MainActivityView.class));
-    }
-
-    private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(String[] strings) {
-            DatabaseReference newListRef = currentRef.child(String.valueOf(childrencount+1));
-            List<Product> productList = new ArrayList<>();
-            productList.add(new Product("-1", "nic"));
-            newListRef.setValue(new ShoppingList(String.valueOf(childrencount + 1), strings[0], productList));
-            getAllShoppingLists();
-            return true;
-        }
     }
 
     private void showAddListPopup(View parent) {
@@ -94,7 +68,7 @@ public class LoggedInScreen extends AppCompatActivity {
             public void onClick(View v) {
                 EditText listNameText = (EditText) popUpLinLayout.getChildAt(0);
                 final String listName = listNameText.getText().toString();
-                new addNewListAsyncTask().execute(listName);
+                controler.handleAddNewList(listName);
                 popup.dismiss();
             }
         });
@@ -104,11 +78,7 @@ public class LoggedInScreen extends AppCompatActivity {
         popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                Intent intent = new Intent(getApplicationContext(), LoggedInScreen.class);
-                intent.putExtra("USERID", userId);
-                intent.putExtra("LOGIN", login);
-                intent.putExtra("MESSAGECOUNT", messageCount);
-                startActivity(intent);
+                controler.restartActivity();
             }
         });
         parent.getBackground().setColorFilter(getResources().getColor(R.color.cardview_dark_background), PorterDuff.Mode.DARKEN);
@@ -128,20 +98,11 @@ public class LoggedInScreen extends AppCompatActivity {
         singleListCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchProductsScreen.class);
-                putExtrasAndStartActivity(intent, listName, listId);
+                controler.startSearchProductsActivity(listName,listId);
             }
         });
     }
 
-    private void putExtrasAndStartActivity(Intent intent, String listName, String listId) {
-        intent.putExtra("LOGIN", login);
-        intent.putExtra("USERID", userId);
-        intent.putExtra("MESSAGECOUNT", messageCount);
-        intent.putExtra("LISTNAME", listName);
-        intent.putExtra("LISTID", listId);
-        startActivity(intent);
-    }
 
     public void setShoppingListBox(String listName, String listId, int childIndex) {
         CardView singleListCardView = inflateShoppingListBox(listName, childIndex);
@@ -156,31 +117,7 @@ public class LoggedInScreen extends AppCompatActivity {
         return singleListCardView;
     }
 
-    private void getAllShoppingLists() {
-        dbUsersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                childrencount = 0;
-                for(DataSnapshot dsp : dataSnapshot.getChildren()){
-                    User user = dsp.getValue(User.class);
-                    if (dsp.getKey().equals(userId)) {
-                        Log.i("znaleziono usera" , " uwaga: " + dsp.getValue(User.class).getLogin());
-                        DataSnapshot shoppingListRef = dsp.child("shoppingLists");
-                        for(DataSnapshot dspShop : shoppingListRef.getChildren()) {
-                            Log.i("znaleziono liste: ", dspShop.getValue(ShoppingList.class).getName());
-                            setShoppingListBox(dspShop.getValue(ShoppingList.class).getName(), dspShop.getValue(ShoppingList.class).getListid(), childrencount);
-                            childrencount++;
-                        }
-                        currentRef = dsp.getRef().child("shoppingLists");
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    public void getAllShoppingLists() {
+        controler.handleGetAllLists();
     }
 }

@@ -2,7 +2,7 @@ package com.example.kuba.firebasetutorial.activities.main_activity;
 
 import android.content.Intent;
 
-import com.example.kuba.firebasetutorial.activities.LoggedInScreen;
+import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
 import com.example.kuba.firebasetutorial.activities.register_screen.RegisterScreenView;
 import com.example.kuba.firebasetutorial.User;
 
@@ -30,7 +30,7 @@ public class MainActivityController {
     }
 
     public void startLoggedInView(String uid, String login) {
-        Intent intent = new Intent(view, LoggedInScreen.class);
+        Intent intent = new Intent(view, LoggedInScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", uid);
         intent.putExtra("MESSAGECOUNT", found.getMessagesSentCount());

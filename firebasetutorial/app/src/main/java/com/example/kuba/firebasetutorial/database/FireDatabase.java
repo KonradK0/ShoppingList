@@ -9,6 +9,8 @@ import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
 import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseModel;
 import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
+import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenControler;
+import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
 import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityController;
 import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
 import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenController;
@@ -20,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +45,44 @@ public final class FireDatabase implements Database {
         DatabaseReference newPostRef = firebaseDatabase.getReference().child("users").push();
         User user = new User(login, password, new ArrayList<ShoppingList>(), new ArrayList<Message>(), new ArrayList<Message>());
         newPostRef.setValue(user);
+    }
+
+    @Override
+    public void addNewList(LoggedInScreenView view, String uid, String listName, final int listsCount) {
+        DatabaseReference newListRef = firebaseDatabase.getReference().child("users").child(uid).child("shoppingLists").child(String.valueOf(listsCount));
+        List<Product> productList = new ArrayList<>();
+        newListRef.setValue(new ShoppingList(String.valueOf(listsCount), listName, productList));
+        view.getAllShoppingLists();
+    }
+
+    @Override
+    public void getAllLists(final LoggedInScreenView view, final LoggedInScreenControler controler, final String userId) {
+        firebaseDatabase.getReference().child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int childrenCount = 0;
+                for(DataSnapshot dsp : dataSnapshot.getChildren()){
+                    User user = dsp.getValue(User.class);
+                    if (dsp.getKey().equals(userId)) {
+                        Log.i("znaleziono usera" , " uwaga: " + dsp.getValue(User.class).getLogin());
+                        DataSnapshot shoppingListRef = dsp.child("shoppingLists");
+                        for(DataSnapshot dspShop : shoppingListRef.getChildren()) {
+                            ShoppingList list = dspShop.getValue(ShoppingList.class);
+                            Log.i("znaleziono liste: ", list.getName());
+                            view.setShoppingListBox(dspShop.getValue(ShoppingList.class).getName(), dspShop.getValue(ShoppingList.class).getListid(), childrenCount);
+                            childrenCount++;
+                        }
+                        break;
+                    }
+                }
+                controler.setListCount(childrenCount);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void getAllProducts(final AllProductsFromDatabaseView view){
