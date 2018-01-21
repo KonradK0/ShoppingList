@@ -7,14 +7,14 @@
     android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/insert_list_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:hint="@string/addListName"
@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/addListButton"
-            android:layout_width="wrap_content"
+            android:layout_width="196dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25sp"
             android:text="@string/addList" />

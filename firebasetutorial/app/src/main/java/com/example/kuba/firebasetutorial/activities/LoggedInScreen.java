@@ -87,7 +87,7 @@ public class LoggedInScreen extends AppCompatActivity {
         final CardView popUpCardView = (CardView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.add_list_popup_view, null, false);
         final LinearLayout popUpLinLayout = (LinearLayout) popUpCardView.getChildAt(0);
         Button button = (Button) popUpLinLayout.getChildAt(1);
-        final PopupWindow popup = new PopupWindow(popUpLinLayout, 400,
+        final PopupWindow popup = new PopupWindow(popUpLinLayout, 300,
                 580, true);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,8 @@ public class LoggedInScreen extends AppCompatActivity {
             public void onDismiss() {
                 Intent intent = new Intent(getApplicationContext(), LoggedInScreen.class);
                 intent.putExtra("USERID", userId);
+                intent.putExtra("LOGIN", login);
+                intent.putExtra("MESSAGECOUNT", messageCount);
                 startActivity(intent);
             }
         });
@@ -127,12 +129,18 @@ public class LoggedInScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchProductsScreen.class);
-                intent.putExtra("USERID", userId);
-                intent.putExtra("LISTNAME", listName);
-                intent.putExtra("LISTID", listId);
-                startActivity(intent);
+                putExtrasAndStartActivity(intent, listName, listId);
             }
         });
+    }
+
+    private void putExtrasAndStartActivity(Intent intent, String listName, String listId) {
+        intent.putExtra("LOGIN", login);
+        intent.putExtra("USERID", userId);
+        intent.putExtra("MESSAGECOUNT", messageCount);
+        intent.putExtra("LISTNAME", listName);
+        intent.putExtra("LISTID", listId);
+        startActivity(intent);
     }
 
     public void setShoppingListBox(String listName, String listId, int childIndex) {

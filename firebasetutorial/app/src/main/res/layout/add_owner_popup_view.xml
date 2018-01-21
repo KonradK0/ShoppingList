@@ -13,21 +13,21 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/insert_list_name"
+            android:id="@+id/insert_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:hint="@string/addProductName"
+            android:hint="@string/addOwnerName"
             android:inputType="text"
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/addProductButton"
+            android:id="@+id/addOwnerButton"
             android:layout_width="196dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25sp"
             android:elevation="0dp"
-            android:text="@string/addNewProduct"
+            android:text="@string/addNewOwner"
             android:textAlignment="center" />
 
     </LinearLayout>

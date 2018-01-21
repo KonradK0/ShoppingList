@@ -29,10 +29,16 @@
         android:layout_height="wrap_content"
         android:text="ADD YOUR OWN PRODUCT" />
 
+    <Button
+        android:id="@+id/addOwnersId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD OWNERS OF THIS LIST" />
+
     <ScrollView
         android:id="@+id/search_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="420dp">
+        android:layout_height="369dp">
 
         <LinearLayout
             android:id="@+id/search_lin_layout"
