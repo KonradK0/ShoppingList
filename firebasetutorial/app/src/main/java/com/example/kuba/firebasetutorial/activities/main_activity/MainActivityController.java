@@ -3,7 +3,7 @@ package com.example.kuba.firebasetutorial.activities.main_activity;
 import android.content.Intent;
 
 import com.example.kuba.firebasetutorial.activities.LoggedInScreen;
-import com.example.kuba.firebasetutorial.activities.RegisterScreen;
+import com.example.kuba.firebasetutorial.activities.register_screen.RegisterScreenView;
 import com.example.kuba.firebasetutorial.User;
 
 /**
@@ -26,7 +26,7 @@ public class MainActivityController {
     }
 
     void startRegisterView() {
-        view.startActivity(new Intent(view, RegisterScreen.class));
+        view.startActivity(new Intent(view, RegisterScreenView.class));
     }
 
     public void startLoggedInView(String uid, String login) {

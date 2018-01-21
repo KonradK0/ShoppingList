@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RegisterScreen" />
+        <activity android:name=".activities.register_screen.RegisterScreenView" />
         <activity android:name=".activities.LoggedInScreen" />
         <activity android:name=".activities.SearchProductsScreen" />
         <activity android:name=".activities.messages_screen.MessagesScreenView" />

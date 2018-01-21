@@ -4,7 +4,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.kuba.firebasetutorial.Message;
+import com.example.kuba.firebasetutorial.Product;
+import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
+import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseModel;
+import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
 import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityController;
 import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
 import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenController;
@@ -31,6 +35,71 @@ public final class FireDatabase implements Database {
         if (firebaseDatabase == null) {
             firebaseDatabase = FirebaseDatabase.getInstance();
         }
+    }
+
+    @Override
+    public void addNewUser(String login, String password){
+        DatabaseReference newPostRef = firebaseDatabase.getReference().child("users").push();
+        User user = new User(login, password, new ArrayList<ShoppingList>(), new ArrayList<Message>(), new ArrayList<Message>());
+        newPostRef.setValue(user);
+    }
+
+    public void getAllProducts(final AllProductsFromDatabaseView view){
+        firebaseDatabase.getReference().child("products").addValueEventListener(new ValueEventListener() {
+            int childrencounter;
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                childrencounter = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String tmp = snapshot.child("productname").getValue().toString();
+                    Log.e("child id: ", snapshot.getKey());
+                    //products.add(new Product(snapshot.getKey(),snapshot.child("productname").getValue().toString()));
+                    Log.e("child productname: ", tmp);
+                    view.setFoundProductBox(tmp, childrencounter);
+                    childrencounter++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addProductToList(final String userId, final String productName, final String listId) {
+        final DatabaseReference listRef = FireDatabase.getInstance().getFirebaseDatabase().getReference().child("users").child(userId).child("shoppingLists")
+                .child(listId).child("productList");
+        listRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            int childrencounter;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                childrencounter = 0;
+                boolean found = false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String tmp = snapshot.child("productname").getValue().toString();
+                    Log.e("child id: ", snapshot.getKey());
+                    Log.e("child name: ", tmp);
+                    if (tmp.equals(productName)) {
+                        found = true;
+                        break;
+                    }
+                    childrencounter++;
+                }
+                if (!found) {
+                    Product newProduct = new Product(String.valueOf(childrencounter), productName);
+                    listRef.child(String.valueOf(childrencounter)).setValue(newProduct);
+                    Log.e("UWAGA:", "new product added");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -95,14 +164,6 @@ public final class FireDatabase implements Database {
         });
     }
 
-//
-
-    @Override
-    public int getListsCount() {
-        ListCountVEL listCountVEL = new ListCountVEL();
-        firebaseDatabase.getReference().child("numberoflists").addValueEventListener(listCountVEL);
-        return listCountVEL.getListCount();
-    }
 
     @Override
     public void checkCredentials(final MainActivityController controller, final String login, final String password){

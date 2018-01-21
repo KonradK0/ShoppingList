@@ -44,7 +44,6 @@ public class SearchProductsScreen extends AppCompatActivity {
         setContentView(R.layout.create_new_list);
         TextView x = findViewById(R.id.listNameTextView);
         x.setText(getIntent().getStringExtra("LISTNAME"));
-        // searchText = findViewById(R.id.search_text);
         found = findViewById(R.id.search_lin_layout);
         db = FirebaseDatabase.getInstance().getReference();
         listRef = db.child("users").child(getIntent().getStringExtra("USERID")).child("shoppingLists")
@@ -123,11 +122,9 @@ public class SearchProductsScreen extends AppCompatActivity {
 
     private void removeProductFromList(final String productName) {
         listRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            int childrencounter;
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                childrencounter = 0;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String tmp = snapshot.child("productname").getValue().toString();
                     Log.e("child id: ", snapshot.getKey());
@@ -138,7 +135,6 @@ public class SearchProductsScreen extends AppCompatActivity {
                         Log.e("UWAGA:", "product deleted");
                         break;
                     }
-                    childrencounter++;
                 }
             }
 
@@ -263,7 +259,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                     if (!productExists) {
                         lastChildRef.setValue(new Product(strings[0]));
                     }
-                    new AllProductsFromDatabaseView().addProductToList(strings[0], listRef);
+                    new AllProductsFromDatabaseView().addProductToList(strings[0]);
                 }
 
                 @Override
@@ -312,7 +308,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user added as an owner", Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    new AllProductsFromDatabaseView().addProductToList(strings[0], listRef);
+                    new AllProductsFromDatabaseView().addProductToList(strings[0]);
                 }
 
                 @Override

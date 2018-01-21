@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.kuba.firebasetutorial.Product;
 import com.example.kuba.firebasetutorial.R;
 import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
+import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,43 +29,14 @@ import java.util.List;
 public class AllProductsFromDatabaseView extends AppCompatActivity {
 
     LinearLayout found;
-    DatabaseReference db;
-    List<Product> products;
-    DatabaseReference listRef;
+    AllProductsFromDatabaseController controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_all_products);
         found = findViewById(R.id.search_lin_layout);
-        db = FirebaseDatabase.getInstance().getReference();
-        listRef = db.child("users").child(getIntent().getStringExtra("USERID")).child("shoppingLists")
-                .child(getIntent().getStringExtra("LISTID")).child("productList");
-        getAllProductsFromDatabase();
-    }
-
-    private void getAllProductsFromDatabase() {
-        DatabaseReference ref = db.child("products");
-        ref.addValueEventListener(new ValueEventListener() {
-            int childrencounter;
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                childrencounter = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String tmp = snapshot.child("productname").getValue().toString();
-                    Log.e("child id: ", snapshot.getKey());
-                    //products.add(new Product(snapshot.getKey(),snapshot.child("productname").getValue().toString()));
-                    Log.e("child productname: ", tmp);
-                    setFoundProductBox(tmp, childrencounter);
-                    childrencounter++;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        controller = new AllProductsFromDatabaseController(this);
+        controller.handleAllGetProducts();
     }
 
     public void setFoundProductBox(String productName, int childIndex) {
@@ -93,52 +65,17 @@ public class AllProductsFromDatabaseView extends AppCompatActivity {
                 String productName = productNameTextView.getText().toString();
                 Log.e("Product Name: ", productName);
                 if (checkBox.isChecked()) {
-                    addProductToList(productName, listRef);
+                    addProductToList(productName);
                 }
-                //TODO dodanie do listy zakupów i wyszukiwanego produktu do bazy
             }
         });
     }
 
-    public void addProductToList(final String productName, final DatabaseReference listRef) {
-        listRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            int childrencounter;
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                childrencounter = 0;
-                boolean found = false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String tmp = snapshot.child("productname").getValue().toString();
-                    Log.e("child id: ", snapshot.getKey());
-                    //products.add(new Product(snapshot.getKey(),snapshot.child("name").getValue().toString()));
-                    Log.e("child name: ", tmp);
-                    if (tmp.equals(productName)) {
-                        found = true;
-                        break;
-                    }
-                    childrencounter++;
-                }
-                if (!found) {
-                    Product newProduct = new Product(String.valueOf(childrencounter), productName);
-                    listRef.child(String.valueOf(childrencounter)).setValue(newProduct);
-                    Log.e("UWAGA:", "new product added");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    public void addProductToList(String productName){
+        controller.handleAddProductToList(productName);
     }
 
     public void onClickUpdateAndReturnToList(View view) {
-        Intent intent = new Intent(this, SearchProductsScreen.class);
-        intent.putExtra("LOGIN", getIntent().getStringExtra("LOGIN"));
-        intent.putExtra("USERID", getIntent().getStringExtra("USERID"));
-        intent.putExtra("LISTID", getIntent().getStringExtra("LISTID"));
-        intent.putExtra("LISTNAME", getIntent().getStringExtra("LISTNAME"));
-
-        startActivity(intent);
+        controller.updateAndRestartActivity();
     }
 }

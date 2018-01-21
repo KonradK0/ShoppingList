@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial.activities;
+package com.example.kuba.firebasetutorial.activities.register_screen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by Kuba on 17/01/2018.
  */
 
-public class RegisterScreen extends AppCompatActivity {
+public class RegisterScreenView extends AppCompatActivity {
     Database db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +35,7 @@ public class RegisterScreen extends AppCompatActivity {
     public void onClickRegister(View view) {
         EditText login = findViewById(R.id.loginEditText);
         EditText password =  findViewById(R.id.passwordEditText);
-        DatabaseReference newPostRef = db.getFirebaseDatabase().getReference().child("users").push();
-
-        ArrayList<ShoppingList> arrayList = new ArrayList<>();
-        ArrayList<Product> productArrayList = new ArrayList<>();
-        Product product = new Product("-1", "xyz");
-        Product product1 = new Product("-2", "abc");
-        productArrayList.add(product);
-        productArrayList.add(product1);
-        ShoppingList shoppingList = new ShoppingList("-1", "lista_xyz", productArrayList);
-        arrayList.add(shoppingList);
-
-        User user = new User(login.getText().toString(), password.getText().toString(), arrayList, new ArrayList<Message>(), new ArrayList<Message>());
-        newPostRef.setValue(user);
-
+        db.addNewUser(login.getText().toString(), password.getText().toString());
         startActivity(new Intent(this, MainActivityView.class));
     }
 
