@@ -13,6 +13,7 @@
     <string name="wrongPassword">Podałeś złe hasło</string>
     <string name="addNewList">Dodaj nową listę…</string>
     <string name="addListName">Podaj nazwę listy…</string>
+    <string name="addProductName">Podaj nazwę produktu…</string>
     <string name="addList">Dodaj listę</string>
     <string name="write_new_message">Napisz nową wiadomość</string>
     <string name="recipient">Adresat…</string>
@@ -20,4 +21,6 @@
     <string name="send">Wyslij</string>
     <string name="title">Tytuł</string>
     <string name="type">Napisz coś…</string>
+    <string name="addNewProduct">Dodaj nowy produkt</string>
+
 </resources>
