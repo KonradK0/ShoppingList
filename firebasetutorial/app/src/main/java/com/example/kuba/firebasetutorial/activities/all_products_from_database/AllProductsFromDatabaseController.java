@@ -20,7 +20,6 @@ public class AllProductsFromDatabaseController {
     public AllProductsFromDatabaseController(AllProductsFromDatabaseView view) {
         this.view = view;
         model = new AllProductsFromDatabaseModel(view, this);
-        listId = view.getIntent().getStringExtra("LISTID");
         login = view.getIntent().getStringExtra("LOGIN");
         uid = view.getIntent().getStringExtra("USERID");
         listId = view.getIntent().getStringExtra("LISTID");

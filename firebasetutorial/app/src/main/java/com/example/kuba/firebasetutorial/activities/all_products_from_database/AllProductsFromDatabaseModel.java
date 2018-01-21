@@ -20,6 +20,7 @@ public class AllProductsFromDatabaseModel {
     }
 
     void addProductToList(String uid, String productName, String listId){
+        ///TODO zmień pierwsze listId na listName
         db.addProductToList(uid, productName, listId);
     }
 }

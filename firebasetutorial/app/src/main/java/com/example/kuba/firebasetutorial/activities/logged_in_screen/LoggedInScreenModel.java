@@ -17,12 +17,12 @@ public class LoggedInScreenModel {
         this.controler = controler;
     }
 
-    void addNewList(String listName) {
-        db.addNewList(view, controler.userId, listName, controler.listCount);
+    void addNewList(String listName, String login) {
+        db.addNewList(view, controler.userId, listName, controler.listCount, login);
     }
 
     void getAllLists() {
-        db.getAllLists(view, controler, controler.userId);
+        db.getAllLists(view, controler, controler.login);
     }
 
 }

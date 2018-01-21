@@ -18,10 +18,10 @@ import java.util.Map;
 public interface Database {
 
     void addNewUser(String login, String password);
-    void addNewList(LoggedInScreenView view, String uid, String listName, final int listsCount);
+    void addNewList(LoggedInScreenView view, String uid, String listName, final int listsCount, String login);
     void getAllLists(final LoggedInScreenView view, final LoggedInScreenControler controler, final String userId);
     void getAllProducts(AllProductsFromDatabaseView view);
-    void addProductToList(String userId, String productName, String listName);
+    void addProductToList(String userId, String productName, String key);
     void getUsersMessages(final MessagesScreenView view, String uid, String direction, final String login, final Map<String, ArrayList<Message>> userMessages);
     void sendMessage(final WriteNewMessageScreenController controller, final String recipentName, final String uid, final String login, final String text);
     void checkCredentials(final MainActivityController controller, final String login, final String password);

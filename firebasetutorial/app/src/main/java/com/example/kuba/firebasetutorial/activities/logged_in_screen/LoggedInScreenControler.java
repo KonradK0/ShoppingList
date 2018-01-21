@@ -34,7 +34,7 @@ public class LoggedInScreenControler {
     }
 
     void handleAddNewList(String listName) {
-        model.addNewList(listName);
+        model.addNewList(listName, login);
     }
 
     void handleGetAllLists() {
@@ -65,7 +65,7 @@ public class LoggedInScreenControler {
     }
 
     void restartActivity() {
-        Intent intent = new Intent(view, MessagesScreenView.class);
+        Intent intent = new Intent(view, LoggedInScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);
         intent.putExtra("MESSAGECOUNT", messageCount);

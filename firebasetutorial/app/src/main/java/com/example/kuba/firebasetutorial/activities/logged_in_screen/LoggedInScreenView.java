@@ -62,8 +62,8 @@ public class LoggedInScreenView extends AppCompatActivity {
         final CardView popUpCardView = (CardView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.add_list_popup_view, null, false);
         final LinearLayout popUpLinLayout = (LinearLayout) popUpCardView.getChildAt(0);
         Button button = (Button) popUpLinLayout.getChildAt(1);
-        final PopupWindow popup = new PopupWindow(popUpLinLayout, 300,
-                580, true);
+        final PopupWindow popup = new PopupWindow(popUpLinLayout, 600,
+                400, true);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
