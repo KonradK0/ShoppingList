@@ -30,6 +30,8 @@ public class AllProductsFromDatabaseView extends AppCompatActivity {
 
     LinearLayout found;
     AllProductsFromDatabaseController controller;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

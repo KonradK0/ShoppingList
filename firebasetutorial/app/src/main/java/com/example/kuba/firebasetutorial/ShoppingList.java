@@ -1,6 +1,7 @@
 package com.example.kuba.firebasetutorial;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class ShoppingList implements Serializable {
 
     String listid;
     String name;
-    List<Product> productList;
+    List<Product> productList = new ArrayList<>();
 
     public ShoppingList() {
     }

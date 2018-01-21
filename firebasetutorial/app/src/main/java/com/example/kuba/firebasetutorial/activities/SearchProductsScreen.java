@@ -24,6 +24,8 @@ import com.example.kuba.firebasetutorial.R;
 import com.example.kuba.firebasetutorial.ShoppingList;
 import com.example.kuba.firebasetutorial.User;
 import com.example.kuba.firebasetutorial.activities.all_products_from_database.AllProductsFromDatabaseView;
+import com.example.kuba.firebasetutorial.database.Database;
+import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SearchProductsScreen extends AppCompatActivity {
 
     LinearLayout found;
+    Database database = FireDatabase.getInstance();
     DatabaseReference db;
     DatabaseReference listRef;
     DatabaseReference copyListRef;
@@ -259,7 +262,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                     if (!productExists) {
                         lastChildRef.setValue(new Product(strings[0]));
                     }
-                    new AllProductsFromDatabaseView().addProductToList(strings[0]);
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0],getIntent().getStringExtra("LISTID"));
                 }
 
                 @Override
@@ -308,7 +311,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user added as an owner", Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    new AllProductsFromDatabaseView().addProductToList(strings[0]);
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0],getIntent().getStringExtra("LISTID"));
                 }
 
                 @Override

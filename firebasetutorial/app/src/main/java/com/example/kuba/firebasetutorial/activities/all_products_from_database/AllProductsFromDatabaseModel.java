@@ -20,6 +20,6 @@ public class AllProductsFromDatabaseModel {
     }
 
     void addProductToList(String uid, String productName, String listId){
-        db.addProductToList(uid, productName, uid);
+        db.addProductToList(uid, productName, listId);
     }
 }
