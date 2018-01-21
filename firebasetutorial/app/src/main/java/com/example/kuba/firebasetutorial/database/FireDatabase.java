@@ -1,10 +1,13 @@
 package com.example.kuba.firebasetutorial.database;
 
-import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.kuba.firebasetutorial.Message;
-import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenModel;
+import com.example.kuba.firebasetutorial.User;
+import com.example.kuba.firebasetutorial.main_activity.MainActivityController;
 import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
+import com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenController;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,7 +26,6 @@ public final class FireDatabase implements Database {
 
     private static FireDatabase instance;
     private static FirebaseDatabase firebaseDatabase;
-    private static int userCounter = getInstance().getUserCount();
 
     private FireDatabase() {
         if (firebaseDatabase == null) {
@@ -31,7 +34,7 @@ public final class FireDatabase implements Database {
     }
 
     @Override
-    public void getUsersMessages(final MessagesScreenView view, String uid, String direction, final String login, final Map<String, ArrayList<Message>> userMessages){
+    public void getUsersMessages(final MessagesScreenView view, String uid, String direction, final String login, final Map<String, ArrayList<Message>> userMessages) {
         final DatabaseReference messages = firebaseDatabase.getReference().child("users")
                 .child(uid)
                 .child(direction);
@@ -56,24 +59,33 @@ public final class FireDatabase implements Database {
     }
 
     @Override
-    public int getUserCount() {
-        firebaseDatabase.getReference().child("numberofusers").addValueEventListener(new ValueEventListener() {
+    public void sendMessage(final WriteNewMessageScreenController controller, final String recipentName, final String uid, final String login, final String messageText) {
+        firebaseDatabase.getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    if (dataSnapshot.getValue() != null) {
-                        try {
-                            String str = dataSnapshot.getValue().toString(); // your name values you will get here
-                            userCounter = Integer.parseInt(str);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.out.println("tag is null");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    if (postSnapshot.getValue(User.class).getLogin().equals(recipentName)) {
+                        String recipientUid = postSnapshot.getKey();
+                        User recipient = postSnapshot.getValue(User.class);
+                        Message message = new Message(uid, login, recipientUid, recipient.getLogin(), messageText, String.valueOf(new Date().getTime()));
+                        firebaseDatabase
+                                .getReference()
+                                .child("users")
+                                .child(recipientUid)
+                                .child("messagesReceived")
+                                .child(String.valueOf(recipient.getMessagesReceivedCount() + 1)).setValue(message);
+                        firebaseDatabase
+                                .getReference("users")
+                                .child(uid)
+                                .child("messagesSent")
+                                .child(String.valueOf(controller.getMessageCount() + 1))
+                                .setValue(message);
+                        controller.setMessageCount(controller.getMessageCount() + 1);
+                        controller.startMessagesScreenActivity();
+                        return;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+                Toast.makeText(controller.getView(), "Podany użytkownik nie istnieje", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -81,8 +93,9 @@ public final class FireDatabase implements Database {
 
             }
         });
-        return userCounter;
     }
+
+//
 
     @Override
     public int getListsCount() {
@@ -91,15 +104,42 @@ public final class FireDatabase implements Database {
         return listCountVEL.getListCount();
     }
 
-
     @Override
-    public int incrementUserCounter() {
-        System.out.println("GETUSERCOUNTER: " + userCounter);
-        firebaseDatabase.getReference().child("numberofusers").setValue(getUserCount() + 1);
-        userCounter++;
-        return userCounter;
-    }
+    public void checkCredentials(final MainActivityController controller, final String login, final String password){
+        firebaseDatabase.getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            boolean userFound = false;
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("THERE WE FUCKIN 2");
+                Log.e("Count ", "" + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User user = postSnapshot.getValue(User.class);
+                    String uid = postSnapshot.getKey();
+                    Log.e("Get login", user.getLogin());
+                    if (login.equals(user.getLogin())) {
+                        if (password.equals(user.getPassword())) {
+                            controller.setFound(user);
+                            Log.e("PRZED CREDENTIALS", Boolean.valueOf(userFound).toString());
+                            userFound = true;
+                            Log.e("PO CREDENTIALS", Boolean.valueOf(userFound).toString());
+                            Log.e("Get password", user.getPassword());
+                            controller.startLoggedInView(uid, login);
+                            break;
+                        }
+                    }
+                    Log.e("Get uid", uid);
+                }
+                if (!userFound) {
+                    Toast.makeText(controller.getView(), "USER NOT FOUND", Toast.LENGTH_LONG).show();
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     public static FireDatabase getInstance() {
         if (instance == null) {
             instance = new FireDatabase();

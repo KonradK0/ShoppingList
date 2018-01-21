@@ -1,7 +1,5 @@
-package com.example.kuba.firebasetutorial;
+package com.example.kuba.firebasetutorial.conversation_screen;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,29 +10,22 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import com.example.kuba.firebasetutorial.Message;
+import com.example.kuba.firebasetutorial.R;
 
-public class ConversationScreen extends AppCompatActivity {
-    ArrayList<Message> messages;
+public class ConversationScreenView extends AppCompatActivity {
     LinearLayout conversationLinLayout;
     CardView answerCardView;
-    String login;
-    String uid;
-    long messageCount;
+    ConversationScreenController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.conversation);
-        login = getIntent().getStringExtra("LOGIN");
-        uid = getIntent().getStringExtra("USERID");
-        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
-        messages = new ArrayList<>();
         conversationLinLayout = findViewById(R.id.messages_in_conv_lin_layout);
         answerCardView = findViewById(R.id.answer_card_view);
-        setMessages();
+        controller = new ConversationScreenController(this);
+        controller.setMessages();
         showMessages();
         setAnswerOnClick();
     }
@@ -43,26 +34,7 @@ public class ConversationScreen extends AppCompatActivity {
         answerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), WriteNewMessageScreen.class);
-                intent.putExtra("USERID", uid);
-                intent.putExtra("LOGIN", login);
-                intent.putExtra("RECIPENTNAME", messages.get(0).getFromName().equals(login) ? messages.get(0).getToName() : messages.get(0).getFromName());
-                intent.putExtra("MESSAGECOUNT", messageCount);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setMessages(){
-        ArrayList<Message> received = (ArrayList<Message>) getIntent().getSerializableExtra("MESSAGESRECEIVED");
-        ArrayList<Message> sent = (ArrayList<Message>) getIntent().getSerializableExtra("MESSAGESSENT");
-        if(received != null) messages.addAll(received);
-        if(sent != null) messages.addAll(sent);
-
-        Collections.sort(messages, new Comparator<Message>() {
-            @Override
-            public int compare(Message o1, Message o2) {
-                return Long.valueOf(o1.getTimeStamp()).compareTo(Long.valueOf(o2.getTimeStamp()));
+                controller.startNewWriteMessageActivity();
             }
         });
     }
@@ -77,11 +49,11 @@ public class ConversationScreen extends AppCompatActivity {
 
     private void showMessages(){
         int messagesCount = 0;
-        for(Message message : messages){
+        for(Message message : controller.messages){
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(20,20,20,20);
             CardView messageCardView = inflateMessageBox(message.getText(), messagesCount++);
-            if(login.equals(message.fromName)){
+            if(controller.login.equals(message.fromName)){
                 messageCardView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.lightGrey));
                 params.gravity = Gravity.START;
             }

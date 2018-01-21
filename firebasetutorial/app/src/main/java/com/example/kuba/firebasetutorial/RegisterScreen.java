@@ -7,17 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.kuba.firebasetutorial.database.Database;
-import com.example.kuba.firebasetutorial.database.Example;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.kuba.firebasetutorial.main_activity.MainActivityView;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -38,9 +32,6 @@ public class RegisterScreen extends AppCompatActivity {
         EditText password =  findViewById(R.id.passwordEditText);
         DatabaseReference newPostRef = db.getFirebaseDatabase().getReference().child("users").push();
 
-        ArrayList<Message> messageArrayList = new ArrayList<>();
-        //Message message = new Message("dddd", "d", "e", "to jest d");
-        //messageArrayList.add(message);
         ArrayList<ShoppingList> arrayList = new ArrayList<>();
         ArrayList<Product> productArrayList = new ArrayList<>();
         Product product = new Product("-1", "xyz");
@@ -48,13 +39,12 @@ public class RegisterScreen extends AppCompatActivity {
         productArrayList.add(product);
         productArrayList.add(product1);
         ShoppingList shoppingList = new ShoppingList("-1", "lista_xyz", productArrayList);
-        ShoppingList shoppingList1 = new ShoppingList("-2", "lista_abc", productArrayList);
         arrayList.add(shoppingList);
 
         User user = new User(login.getText().toString(), password.getText().toString(), arrayList, new ArrayList<Message>(), new ArrayList<Message>());
         newPostRef.setValue(user);
 
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MainActivityView.class));
     }
 
 }

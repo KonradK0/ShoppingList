@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
+import com.example.kuba.firebasetutorial.main_activity.MainActivityView;
 import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +64,7 @@ public class LoggedInScreen extends AppCompatActivity {
     }
 
     public void onClickLogOut(View view) {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MainActivityView.class));
     }
 
     private class addNewListAsyncTask extends AsyncTask<String, Void, Boolean> {

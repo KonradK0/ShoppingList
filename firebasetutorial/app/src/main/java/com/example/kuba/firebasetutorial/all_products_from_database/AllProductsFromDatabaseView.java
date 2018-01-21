@@ -1,4 +1,4 @@
-package com.example.kuba.firebasetutorial;
+package com.example.kuba.firebasetutorial.all_products_from_database;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.kuba.firebasetutorial.Product;
+import com.example.kuba.firebasetutorial.R;
+import com.example.kuba.firebasetutorial.SearchProductsScreen;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +25,7 @@ import java.util.List;
  * Created by Kuba on 20/01/2018.
  */
 
-public class AllProductsFromDatabase extends AppCompatActivity {
+public class AllProductsFromDatabaseView extends AppCompatActivity {
 
     LinearLayout found;
     DatabaseReference db;

@@ -1,6 +1,5 @@
 package com.example.kuba.firebasetutorial.messages_screen;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.kuba.firebasetutorial.LoggedInScreen;
 import com.example.kuba.firebasetutorial.R;
 
 import java.util.HashSet;
@@ -18,20 +16,15 @@ import java.util.Set;
 public class MessagesScreenView extends AppCompatActivity {
     LinearLayout messagesLinLayout;
     CardView newMessageCardView;
-    String uid;
-    String login;
-    long messageCount;
     MessagesScreenController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages_screen);
-        login = getIntent().getStringExtra("LOGIN");
-        uid = getIntent().getStringExtra("USERID");
-        messageCount = getIntent().getLongExtra("MESSAGECOUNT", -1);
         messagesLinLayout = findViewById(R.id.users_messages);
         newMessageCardView = findViewById(R.id.new_message_card_view);
+
         controller = new MessagesScreenController(this);
         controller.handleGettingMessages();
         setNewMessageCardViewOnClickListener();

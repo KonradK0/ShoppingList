@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Message implements Serializable{
 
     String fromUid;
-    String fromName;
+    public String fromName;
     String toUid;
     String toName;
     String text;

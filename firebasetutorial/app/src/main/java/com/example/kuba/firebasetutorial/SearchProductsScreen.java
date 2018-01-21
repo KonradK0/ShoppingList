@@ -18,14 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.kuba.firebasetutorial.all_products_from_database.AllProductsFromDatabaseView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchProductsScreen extends AppCompatActivity {
 
@@ -205,7 +203,7 @@ public class SearchProductsScreen extends AppCompatActivity {
     }
 
     public void onClickShowAllProductsFromDatabase(View view) {
-        Intent intent = new Intent(this, AllProductsFromDatabase.class);
+        Intent intent = new Intent(this, AllProductsFromDatabaseView.class);
         putExtrasAndStartActivity(intent);
     }
 
@@ -253,7 +251,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     DatabaseReference lastChildRef = newListRef.child(String.valueOf(dataSnapshot.getChildrenCount()));
                     lastChildRef.setValue(new Product(strings[0]));
-                    new AllProductsFromDatabase().addProductToList(strings[0],listRef);
+                    new AllProductsFromDatabaseView().addProductToList(strings[0],listRef);
                 }
 
                 @Override

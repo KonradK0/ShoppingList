@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.kuba.firebasetutorial.WriteNewMessageScreen">
+    tools:context="com.example.kuba.firebasetutorial.write_new_message_screen.WriteNewMessageScreenView">
 
     <EditText
         android:id="@+id/message_to"
