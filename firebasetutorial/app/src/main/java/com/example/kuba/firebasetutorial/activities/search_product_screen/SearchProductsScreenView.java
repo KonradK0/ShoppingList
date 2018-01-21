@@ -16,14 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.example.kuba.firebasetutorial.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SearchProductsScreenView extends AppCompatActivity {
-
     LinearLayout found;
     SearchProductScreenController controller;
-    DatabaseReference db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +27,13 @@ public class SearchProductsScreenView extends AppCompatActivity {
         setContentView(R.layout.create_new_list);
         TextView x = findViewById(R.id.listNameTextView);
         x.setText(getIntent().getStringExtra("LISTNAME"));
+        controller = new SearchProductScreenController(this);
         found = findViewById(R.id.search_lin_layout);
-        db = FirebaseDatabase.getInstance().getReference();
         getProductsFromList();
         Button addProductBtn = findViewById(R.id.addProductBtnId);
         setNewProductListener(addProductBtn);
         Button addOwnersBtn = findViewById(R.id.addOwnersId);
         setNewOwnerListener(addOwnersBtn);
-        controller = new SearchProductScreenController(this);
     }
 
     private void setNewOwnerListener(Button addOwnersBtn) {
