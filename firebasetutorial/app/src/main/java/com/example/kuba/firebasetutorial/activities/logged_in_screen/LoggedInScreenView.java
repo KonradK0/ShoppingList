@@ -3,11 +3,9 @@ package com.example.kuba.firebasetutorial.activities.logged_in_screen;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.example.kuba.firebasetutorial.Product;
 import com.example.kuba.firebasetutorial.R;
-import com.example.kuba.firebasetutorial.ShoppingList;
-import com.example.kuba.firebasetutorial.User;
-import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
-import com.example.kuba.firebasetutorial.database.Database;
-import com.example.kuba.firebasetutorial.database.FireDatabase;
 import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityView;
-import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoggedInScreenView extends AppCompatActivity {
     CardView newListCardView;

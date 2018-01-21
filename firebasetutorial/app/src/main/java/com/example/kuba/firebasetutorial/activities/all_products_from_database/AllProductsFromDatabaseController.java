@@ -2,7 +2,7 @@ package com.example.kuba.firebasetutorial.activities.all_products_from_database;
 
 import android.content.Intent;
 
-import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
+import com.example.kuba.firebasetutorial.activities.search_product_screen.SearchProductsScreenView;
 
 /**
  * Created by Konrad on 21.01.2018.
@@ -35,7 +35,7 @@ public class AllProductsFromDatabaseController {
     }
 
     void updateAndRestartActivity(){
-        Intent intent = new Intent(view, SearchProductsScreen.class);
+        Intent intent = new Intent(view, SearchProductsScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", uid);
         intent.putExtra("LISTID", listId);

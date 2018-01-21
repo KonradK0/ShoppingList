@@ -3,14 +3,8 @@ package com.example.kuba.firebasetutorial.activities.logged_in_screen;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.kuba.firebasetutorial.Product;
-import com.example.kuba.firebasetutorial.ShoppingList;
-import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
+import com.example.kuba.firebasetutorial.activities.search_product_screen.SearchProductsScreenView;
 import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
-import com.google.firebase.database.DatabaseReference;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Konrad on 21.01.2018.
@@ -47,7 +41,7 @@ public class LoggedInScreenControler {
     }
 
     void startSearchProductsActivity(String listName, String listId) {
-        Intent intent = new Intent(view, SearchProductsScreen.class);
+        Intent intent = new Intent(view, SearchProductsScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);
         intent.putExtra("MESSAGECOUNT", messageCount);

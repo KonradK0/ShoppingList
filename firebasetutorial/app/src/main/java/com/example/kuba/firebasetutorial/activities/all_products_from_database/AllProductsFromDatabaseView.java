@@ -1,6 +1,5 @@
 package com.example.kuba.firebasetutorial.activities.all_products_from_database;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,17 +9,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.kuba.firebasetutorial.Product;
 import com.example.kuba.firebasetutorial.R;
-import com.example.kuba.firebasetutorial.activities.SearchProductsScreen;
-import com.example.kuba.firebasetutorial.database.FireDatabase;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
 
 /**
  * Created by Kuba on 20/01/2018.

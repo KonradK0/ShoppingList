@@ -13,6 +13,8 @@ import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScr
 import com.example.kuba.firebasetutorial.activities.logged_in_screen.LoggedInScreenView;
 import com.example.kuba.firebasetutorial.activities.main_activity.MainActivityController;
 import com.example.kuba.firebasetutorial.activities.messages_screen.MessagesScreenView;
+import com.example.kuba.firebasetutorial.activities.search_product_screen.SearchProductScreenController;
+import com.example.kuba.firebasetutorial.activities.search_product_screen.SearchProductsScreenView;
 import com.example.kuba.firebasetutorial.activities.write_new_message_screen.WriteNewMessageScreenController;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,13 +62,13 @@ public final class FireDatabase implements Database {
 
     @Override
     public void getAllLists(final LoggedInScreenView view, final LoggedInScreenControler controler, final String userLogin) {
-        firebaseDatabase.getReference().child("lists").addValueEventListener(new ValueEventListener() {
+        DatabaseReference fastRef = firebaseDatabase.getReference().child("lists").getRef();
+        fastRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int childrenCount = 0;
                 //lists
                 for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    ShoppingList shoppingList = dsp.getValue(ShoppingList.class);
                     DataSnapshot dsp1 = dsp.child("owners");
                     boolean userExists = false;
                     // owners
@@ -77,8 +79,8 @@ public final class FireDatabase implements Database {
                         }
                     }
                     if (userExists) {
-                        view.setShoppingListBox(dsp.getValue(ShoppingList.class).getName(), dsp.getKey(), childrenCount);
-                        Log.e("shoppinglistclass name: ", dsp.getValue(ShoppingList.class).getName());
+                        view.setShoppingListBox(String.valueOf(dsp.child("name").getValue()), dsp.getKey(), childrenCount);
+                        Log.e("shoppinglistclass name: ", String.valueOf(dsp.child("name").getValue()));
                         childrenCount++;
                     }
                 }
@@ -154,6 +156,120 @@ public final class FireDatabase implements Database {
                         }
                     });
 
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void removeProductFromList(final String productName, String listKey) {
+        DatabaseReference removeRef = firebaseDatabase.getReference().child("lists").child(listKey).child("productList");
+        removeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //products
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String productNameFromList = snapshot.child("productname").getValue().toString();
+                    Log.e("child id: ", snapshot.getKey());
+                    //products.add(new Product(snapshot.getKey(),snapshot.child("name").getValue().toString()));
+                    Log.e("child name: ", productNameFromList);
+                    if (productNameFromList.equals(productName)) {
+                        snapshot.getRef().removeValue();
+                        Log.e("UWAGA:", "product deleted");
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getProductsFromList(final SearchProductsScreenView view, final String listKey) {
+        DatabaseReference getRef = firebaseDatabase.getReference().child("lists").child(listKey).child("productList");
+        getRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            int childrencounter;
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                childrencounter = 0;
+                //products
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    //Log.e("child name: ", snapshot.child("productname").getValue().toString());
+                    view.setFoundProductBox(String.valueOf(snapshot.child("productname").getValue()), childrencounter);
+                    childrencounter++;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addOwnProduct(final SearchProductScreenController controller, final String productName, final String uid, final String listKey) {
+        final DatabaseReference newListRef = firebaseDatabase.getReference().child("products");
+        newListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int childrenCount = 0;
+                DatabaseReference lastChildRef = newListRef.child(String.valueOf(dataSnapshot.getChildrenCount()));
+                boolean productExists = false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    System.out.println("strings[0]: " + productName + "  " + String.valueOf(snapshot.child("productname").getValue()));
+                    if (productName.equals(String.valueOf(snapshot.child("productname").getValue()))) {
+                        productExists = true;
+                        break;
+                    }
+                    childrenCount++;
+                }
+                if (!productExists) {
+                    lastChildRef.setValue(new Product(productName));
+                }
+                addProductToList(uid, productName, listKey);
+                controller.restartActivity();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addNewOwner(final SearchProductsScreenView view, String listKey, final String login) {
+        final DatabaseReference newListRef = firebaseDatabase.getReference().child("lists").child(listKey).child("owners");
+        newListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean userExists = false;
+                //Owners
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Owner owner = snapshot.getValue(Owner.class);
+                    Log.e("String.valueOf(snapshot.child(key).child(\"login\").getValue()): ", owner.getLogin());
+                    if (login.equals(String.valueOf(owner.getLogin()))) {
+                        userExists = true;
+                        break;
+                    }
+                }
+                if (!userExists) {
+                    newListRef.child(String.valueOf(dataSnapshot.getChildrenCount())).setValue(new Owner(login));
+                    Toast toast = Toast.makeText(view,   login + " added as an owner of this list.", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(view, login + " user already was an owner.", Toast.LENGTH_LONG);
+                    toast.show();
                 }
             }
 

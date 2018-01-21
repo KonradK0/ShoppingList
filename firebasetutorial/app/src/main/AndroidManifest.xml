@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".activities.register_screen.RegisterScreenView" />
         <activity android:name=".activities.logged_in_screen.LoggedInScreenView" />
-        <activity android:name=".activities.SearchProductsScreen" />
+        <activity android:name=".activities.search_product_screen.SearchProductsScreenView" />
         <activity android:name=".activities.messages_screen.MessagesScreenView" />
         <activity android:name=".activities.conversation_screen.ConversationScreenView" />
         <activity android:name=".activities.write_new_message_screen.WriteNewMessageScreenView"></activity>
