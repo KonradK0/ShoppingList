@@ -22,7 +22,6 @@
         <activity android:name=".MessagesScreen" />
         <activity android:name=".Conversation" />
         <activity android:name=".WriteNewMessageScreen"></activity>
-        <activity android:name=".SingleMessage" />
         <activity android:name=".AllProductsFromDatabase"/>
     </application>
 
