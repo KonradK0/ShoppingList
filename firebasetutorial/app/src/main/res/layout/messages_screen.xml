@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kuba.firebasetutorial.MessagesScreen">
+    tools:context="com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView">
 
 
     <LinearLayout
@@ -12,6 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/homeimageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="end"
+            android:contentDescription="home button"
+            android:maxHeight="50dp"
+            android:maxWidth="50dp"
+            android:onClick="onClickHome"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/home" />
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"

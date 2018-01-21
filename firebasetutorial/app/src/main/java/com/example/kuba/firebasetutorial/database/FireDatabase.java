@@ -1,9 +1,18 @@
 package com.example.kuba.firebasetutorial.database;
 
+import android.content.Context;
+
+import com.example.kuba.firebasetutorial.Message;
+import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenModel;
+import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Konrad on 19.01.2018.
@@ -19,6 +28,31 @@ public final class FireDatabase implements Database {
         if (firebaseDatabase == null) {
             firebaseDatabase = FirebaseDatabase.getInstance();
         }
+    }
+
+    @Override
+    public void getUsersMessages(final MessagesScreenView view, String uid, String direction, final String login, final Map<String, ArrayList<Message>> userMessages){
+        final DatabaseReference messages = firebaseDatabase.getReference().child("users")
+                .child(uid)
+                .child(direction);
+        messages.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Message message = postSnapshot.getValue(Message.class);
+                    String from = login.equals(message.getFromName()) ? message.getToName() : message.getFromName();
+                    if (userMessages.get(from) == null) {
+                        userMessages.put(from, new ArrayList<Message>());
+                    }
+                    userMessages.get(from).add(message);
+                }
+                view.setupMessageBox();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Conversation extends AppCompatActivity {
+public class ConversationScreen extends AppCompatActivity {
     ArrayList<Message> messages;
     LinearLayout conversationLinLayout;
     CardView answerCardView;

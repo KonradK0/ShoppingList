@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
+import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
@@ -61,7 +61,7 @@ public class WriteNewMessageScreen extends AppCompatActivity {
                                 .child("messagesSent")
                                 .child(String.valueOf(++messageCount))
                                 .setValue(message);
-                        Intent intent = new Intent(getApplicationContext(), MessagesScreen.class);
+                        Intent intent = new Intent(getApplicationContext(), MessagesScreenView.class);
                         intent.putExtra("USERID", uid);
                         intent.putExtra("LOGIN", login);
                         intent.putExtra("MESSAGECOUNT", messageCount);

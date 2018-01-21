@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -20,15 +19,14 @@ import android.widget.TextView;
 
 import com.example.kuba.firebasetutorial.database.Database;
 import com.example.kuba.firebasetutorial.database.FireDatabase;
+import com.example.kuba.firebasetutorial.messages_screen.MessagesScreenView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LoggedInScreen extends AppCompatActivity {
     CardView newListCardView;
@@ -57,7 +55,7 @@ public class LoggedInScreen extends AppCompatActivity {
     }
 
     public void onClickMessages(View view) {
-        Intent intent = new Intent(getApplicationContext(), MessagesScreen.class);
+        Intent intent = new Intent(getApplicationContext(), MessagesScreenView.class);
         intent.putExtra("LOGIN", login);
         intent.putExtra("USERID", userId);
         intent.putExtra("MESSAGECOUNT", messageCount);
