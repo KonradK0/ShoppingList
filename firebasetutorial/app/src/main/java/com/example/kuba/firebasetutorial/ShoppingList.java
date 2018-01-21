@@ -1,5 +1,7 @@
 package com.example.kuba.firebasetutorial;
 
+import com.example.kuba.firebasetutorial.activities.Owner;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +12,23 @@ import java.util.List;
 
 public class ShoppingList implements Serializable {
 
-    String listid;
     String name;
     List<Product> productList = new ArrayList<>();
+    List<Owner> owners = new ArrayList<>();
+    String numberOfAddedProducts;
 
     public ShoppingList() {
+        numberOfAddedProducts = String.valueOf(0);
     }
 
-    public ShoppingList(String listid, String name, List<Product> productList) {
-        this.listid = listid;
+
+    public ShoppingList(String name, List<Product> productList, List<Owner> ownersList) {
         this.name = name;
         this.productList = productList;
+        this.owners = ownersList;
+        numberOfAddedProducts = String.valueOf(0);
     }
 
-    public String getListid() {
-        return listid;
-    }
 
     public String getName() {
         return name;
@@ -34,4 +37,9 @@ public class ShoppingList implements Serializable {
     public List<Product> getProductList() {
         return productList;
     }
+
+    public List<Owner> getOwners() {
+        return owners;
+    }
+
 }

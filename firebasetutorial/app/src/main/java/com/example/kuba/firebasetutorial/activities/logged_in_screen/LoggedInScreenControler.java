@@ -34,7 +34,7 @@ public class LoggedInScreenControler {
     }
 
     void handleAddNewList(String listName) {
-        model.addNewList(listName);
+        model.addNewList(listName, login);
     }
 
     void handleGetAllLists() {

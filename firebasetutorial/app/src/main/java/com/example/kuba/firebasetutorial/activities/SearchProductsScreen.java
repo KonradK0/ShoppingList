@@ -41,6 +41,7 @@ public class SearchProductsScreen extends AppCompatActivity {
     DatabaseReference listRef;
     DatabaseReference copyListRef;
     ShoppingList currentList;
+    String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,23 +49,22 @@ public class SearchProductsScreen extends AppCompatActivity {
         setContentView(R.layout.create_new_list);
         TextView x = findViewById(R.id.listNameTextView);
         x.setText(getIntent().getStringExtra("LISTNAME"));
+        key = getIntent().getStringExtra("LISTID");
         found = findViewById(R.id.search_lin_layout);
         db = FirebaseDatabase.getInstance().getReference();
-        listRef = db.child("users").child(getIntent().getStringExtra("USERID")).child("shoppingLists")
-                .child(getIntent().getStringExtra("LISTID")).child("productList");
-        copyListRef = db.child("users").child(getIntent().getStringExtra("USERID")).child("shoppingLists")
-                .child(getIntent().getStringExtra("LISTID"));
-        copyListRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                currentList = dataSnapshot.getValue(ShoppingList.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        listRef = db.child("lists");
+        copyListRef = db.child("lists");
+//        copyListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                currentList = dataSnapshot.getValue(ShoppingList.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         getProductsFromList();
         Button addProductBtn = findViewById(R.id.addProductBtnId);
@@ -125,16 +125,17 @@ public class SearchProductsScreen extends AppCompatActivity {
     }
 
     private void removeProductFromList(final String productName) {
-        listRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
+        DatabaseReference removeRef = listRef.child(key).child("productList");
+        removeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //products
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String tmp = snapshot.child("productname").getValue().toString();
+                    String productNameFromList = snapshot.child("productname").getValue().toString();
                     Log.e("child id: ", snapshot.getKey());
                     //products.add(new Product(snapshot.getKey(),snapshot.child("name").getValue().toString()));
-                    Log.e("child name: ", tmp);
-                    if (tmp.equals(productName)) {
+                    Log.e("child name: ", productNameFromList);
+                    if (productNameFromList.equals(productName)) {
                         snapshot.getRef().removeValue();
                         Log.e("UWAGA:", "product deleted");
                         break;
@@ -150,21 +151,20 @@ public class SearchProductsScreen extends AppCompatActivity {
     }
 
     private void getProductsFromList() {
-        listRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference getRef = listRef.child(key).child("productList");
+        getRef.addListenerForSingleValueEvent(new ValueEventListener() {
             int childrencounter;
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 childrencounter = 0;
+                //products
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     //Log.e("child name: ", snapshot.child("productname").getValue().toString());
-                    if (childrencounter >= 1) {
-                        setFoundProductBox(String.valueOf(snapshot.child("productname").getValue()), childrencounter - 1);
-                    }
+                    setFoundProductBox(String.valueOf(snapshot.child("productname").getValue()), childrencounter);
                     childrencounter++;
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -263,7 +263,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                     if (!productExists) {
                         lastChildRef.setValue(new Product(strings[0]));
                     }
-                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], getIntent().getStringExtra("LISTID"));
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], key);
                 }
 
                 @Override
@@ -312,7 +312,7 @@ public class SearchProductsScreen extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), strings[0] + " user added as an owner", Toast.LENGTH_LONG);
                         toast.show();
                     }
-                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], getIntent().getStringExtra("LISTID"));
+                    database.addProductToList(getIntent().getStringExtra("USERID"), strings[0], key);
                 }
 
                 @Override
